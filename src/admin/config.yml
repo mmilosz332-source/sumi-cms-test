@@ -3,7 +3,7 @@
 backend:
   name: github
   # ZMIEŃ: Twój login na GitHubie / nazwa repozytorium
-  repo: TWOJ-LOGIN-GITHUB/sumi-cms-test
+  repo: mmilosz332-source/sumi-cms-test
   branch: main
 
 # where uploaded photos go in the repo, and how the site refers to them
