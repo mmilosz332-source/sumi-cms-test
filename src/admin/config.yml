@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  # ZMIEŃ: Twój login na GitHubie / nazwa repozytorium
+  repo: TWOJ-LOGIN-GITHUB/sumi-cms-test
+  branch: main
+
+# where uploaded photos go in the repo, and how the site refers to them
+media_folder: /src/zdjecia/blog
+public_folder: /zdjecia/blog
+
+# post addresses without Polish characters (zolc-i-ryz, not żółć-i-ryż)
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: blog
+    label: Blog
+    label_singular: Wpis
+    folder: src/blog
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: "{{title}}"
+    summary: "{{title}} · {{date}}"
+    sortable_fields: [date, title]
+    fields:
+      - { name: title, label: Tytuł, widget: string }
+      - { name: date, label: Data, widget: datetime, type: date }
+      - { name: description, label: Opis, widget: text, hint: "Krótki opis na kafelek i do wyszukiwarek (ok. 150 znaków)." }
+      - { name: image, label: Zdjęcie główne, widget: image }
+      - { name: body, label: Treść, widget: markdown }

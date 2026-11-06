@@ -1,0 +1,22 @@
+---
+layout: layouts/base.njk
+---
+<article>
+<header class="post-head">
+  <a class="back" href="/blog/">← Wszystkie wpisy</a>
+  <h1>{{ title }}</h1>
+  <time datetime="{{ page.date | isoDate }}">{{ page.date | plDate }}</time>
+</header>
+<div class="post-hero"><img src="{{ image }}" alt="{{ title }}" data-sizes="(max-width:1120px) 100vw, 1120px" data-eager></div>
+<div class="post-body">
+{{ content | safe }}
+</div>
+</article>
+<aside class="cta" aria-label="Rezerwacja"><div class="cta__box">
+  <h2>Do zobaczenia przy ladzie</h2>
+  <p>Dwanaście miejsc, jeden wieczór, osiemnaście dań.</p>
+  <div class="cta__row">
+    <a class="btn btn--solid" href="/#rezerwacja">Zarezerwuj stolik <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h14M9 2l6 6-6 6"/></svg></a>
+    <a class="ulink" href="/#karta">Zobacz menu</a>
+  </div>
+</div></aside>

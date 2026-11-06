@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ metaTitle or title }}</title>
+<meta name="description" content="{{ description }}">
+<!-- fictional restaurant: keep it out of search results -->
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c0b0a">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<meta property="og:type" content="{{ ogType or 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:title" content="{{ metaTitle or title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+{%- if image %}
+<meta property="og:image" content="{{ image }}">
+<meta property="og:image:alt" content="{{ title }}">
+{%- endif %}
+{%- if ogType == 'article' %}
+<meta property="article:published_time" content="{{ page.date | isoDate }}">
+<link rel="preload" as="image" data-photo="{{ image }}" data-sizes="(max-width:1120px) 100vw, 1120px">
+{%- endif %}
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@400&family=Manrope:wght@300;400;500&family=Shippori+Mincho:wght@800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+<header class="nav"><div class="nav__in">
+  <a href="/" class="logo" aria-label="SUMI — strona główna">SUMI <b>墨</b></a>
+  <ul class="nav__links">
+    {%- for item in site.nav %}{% if item[1] != 'Dojazd' %}
+    <li><a href="{{ item[0] }}"{% if item[1] == 'Blog' %} aria-current="page"{% endif %}>{{ item[1] }}</a></li>
+    {%- endif %}{% endfor %}
+  </ul>
+  <a href="/#rezerwacja" class="nav__btn">Rezerwacja</a>
+  <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+</div></header>
+<nav class="mobile-menu" aria-label="Menu mobilne">
+  {%- for item in site.nav %}
+  <a href="{{ item[0] }}"{% if item[1] == 'Blog' %} aria-current="page"{% endif %}><small>0{{ loop.index }}</small>{{ item[1] }}</a>
+  {%- endfor %}
+</nav>
+<main>
+{{ content | safe }}
+</main>
+<footer class="foot"><div class="wrap">
+  <span>© 2026 Sumi — fikcyjna restauracja, projekt portfolio</span>
+  <span>Zdjęcia: Unsplash · <a href="/">Strona główna</a></span>
+</div></footer>
+<nav class="dock" aria-label="Szybkie akcje">
+  <a href="/#karta"><b aria-hidden="true">品</b>Karta</a>
+  <a href="{{ site.phone }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 6.9 6.9l1.5-2.3L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>Zadzwoń</a>
+  <a class="dock__book" href="/#rezerwacja"><b aria-hidden="true">予</b>Rezerwuj</a>
+</nav>
+<script>
+(function(){var b=document.querySelector('.burger'),c=document.body;
+function t(o){c.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o)}
+b.addEventListener('click',function(){t(!c.classList.contains('menu-open'))});
+addEventListener('keydown',function(e){if(e.key==='Escape')t(false)})})();
+</script>
+</body>
+</html>

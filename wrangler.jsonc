@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sumi-cms-test",
+  "compatibility_date": "2026-11-01",
+  // `wrangler deploy` builds the site first...
+  "build": {
+    "command": "npm run build"
+  },
+  // ...then uploads Eleventy's output folder as static assets (no Worker code needed)
+  "assets": {
+    "directory": "./_site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "sumi-cms",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SUMI — strona restauracji (fikcyjnej) z blogiem na Eleventy i Sveltia CMS",
+  "scripts": {
+    "dev": "eleventy --serve --port=8080",
+    "build": "eleventy",
+    "deploy": "wrangler deploy"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "@11ty/eleventy-img": "^7.1.1",
+    "esbuild": "^0.28.2",
+    "wrangler": "^4.158.0"
+  }
+}

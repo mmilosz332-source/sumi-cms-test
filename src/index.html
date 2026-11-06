@@ -1,0 +1,2028 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUMI 墨 — Omakase Warszawa</title>
+<meta name="description" content="SUMI — japońska restauracja omakase w Warszawie. Dwanaście miejsc przy ladzie, osiemnaście dań, jedna wieczorna podróż.">
+<!-- fictional restaurant: keep it out of search results -->
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="img/hero-800.webp" imagesrcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1200.webp 1200w, img/hero-1600.webp 1600w" imagesizes="(max-width:900px) 92vw, 40vw" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400&family=Manrope:wght@300;400;500;600&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0c0b0a;
+  --ink-2:#14120f;
+  --ink-3:#1d1a16;
+  --line:rgba(236,228,214,.12);
+  --paper:#ece4d6;
+  --paper-dim:#b9b0a2;
+  --muted:#7d766b;
+  --shu:#c9442e;
+  --shu-soft:#e0664f;
+  --gold:#b89a6a;
+  --serif:"Cormorant Garamond", "Times New Roman", serif;
+  --jp:"Shippori Mincho", serif;
+  --sans:"Manrope", system-ui, sans-serif;
+  --mono:"DM Mono", ui-monospace, monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-io:cubic-bezier(.77,0,.18,1);
+  --gutter:clamp(16px, 4vw, 64px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ink);-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{
+  background:var(--ink);color:var(--paper);
+  font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body.is-loading{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--shu);color:var(--paper)}
+:focus-visible{outline:1px solid var(--shu);outline-offset:4px}
+em{font-style:italic}
+
+/* ---------- grain ---------- */
+.grain{
+  position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:90;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 1.2s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}
+  60%{transform:translate(-6%,-2%)}80%{transform:translate(5%,4%)}100%{transform:translate(0,0)}
+}
+
+/* ---------- preloader ---------- */
+.loader{
+  position:fixed;inset:0;z-index:100;background:var(--ink);
+  display:grid;place-items:center;
+  clip-path:inset(0 0 0 0);
+  transition:clip-path 1.2s var(--ease-io);
+}
+.loader.done{clip-path:inset(0 0 100% 0)}
+.loader__kanji{
+  font-family:var(--jp);font-weight:800;font-size:clamp(7rem,22vw,15rem);line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(236,228,214,.25);position:relative;
+}
+.loader__kanji span{
+  position:absolute;inset:0;color:var(--paper);-webkit-text-stroke:0;
+  clip-path:inset(100% 0 0 0);transition:clip-path .2s linear;
+}
+.loader__meta{
+  position:absolute;left:var(--gutter);right:var(--gutter);bottom:var(--gutter);
+  display:flex;justify-content:space-between;align-items:flex-end;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+}
+.loader__count{font-family:var(--serif);font-style:italic;font-size:clamp(3rem,8vw,6rem);line-height:.8;color:var(--paper);letter-spacing:0}
+.loader__seal{position:absolute;top:var(--gutter);right:var(--gutter);width:42px;height:42px;background:var(--shu);display:grid;place-items:center;font-family:var(--jp);font-weight:800;color:var(--ink);font-size:1.3rem;border-radius:4px}
+
+/* ---------- cursor ---------- */
+.cursor,.cursor-dot{position:fixed;top:0;left:0;pointer-events:none;z-index:95;border-radius:50%}
+.cursor{
+  width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid rgba(236,228,214,.45);
+  display:grid;place-items:center;
+  transition:width .5s var(--ease),height .5s var(--ease),margin .5s var(--ease),background .4s,border-color .4s;
+}
+.cursor span{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:0;transition:opacity .3s}
+.cursor-dot{width:5px;height:5px;margin:-2.5px 0 0 -2.5px;background:var(--shu)}
+.cursor.is-hover{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(236,228,214,.08);border-color:transparent;backdrop-filter:blur(2px)}
+.cursor.is-label{width:86px;height:86px;margin:-43px 0 0 -43px;background:var(--paper);border-color:transparent}
+.cursor.is-label span{opacity:1}
+@media (hover:none),(pointer:coarse){.cursor,.cursor-dot{display:none}}
+
+/* ---------- progress ---------- */
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;background:var(--shu);transform-origin:0 50%;transform:scaleX(0);z-index:80}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:70;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:22px var(--gutter);
+  transition:transform .7s var(--ease),background .5s,padding .5s var(--ease),border-color .5s;
+  border-bottom:1px solid transparent;
+}
+.nav.is-scrolled{background:rgba(12,11,10,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px);padding-top:14px;padding-bottom:14px;border-color:var(--line)}
+.nav.is-hidden{transform:translateY(-100%)}
+.logo{display:flex;align-items:baseline;gap:10px;font-family:var(--serif);font-size:1.7rem;letter-spacing:.32em;font-weight:500}
+.logo b{font-family:var(--jp);font-weight:800;font-size:1.05rem;letter-spacing:0;color:var(--shu)}
+.nav__links{display:flex;gap:clamp(18px,2.6vw,40px);list-style:none}
+.nav__links a{position:relative;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;font-weight:400;color:var(--paper-dim);transition:color .3s;display:inline-flex;overflow:hidden;height:1.3em;line-height:1.3em}
+.nav__links a span{display:block;transition:transform .6s var(--ease)}
+.nav__links a span::after{content:attr(data-t);display:block;color:var(--paper)}
+.nav__links a:hover span{transform:translateY(-100%)}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:14px;
+  padding:15px 26px;border:1px solid rgba(236,228,214,.3);border-radius:100px;
+  font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;overflow:hidden;isolation:isolate;
+  transition:border-color .4s,color .5s var(--ease);
+}
+.btn::before{content:"";position:absolute;inset:0;background:var(--shu);border-radius:inherit;transform:translateY(101%);transition:transform .6s var(--ease);z-index:-1}
+.btn:hover{border-color:var(--shu)}
+.btn:hover::before{transform:none}
+.btn svg{width:14px;height:14px;transition:transform .6s var(--ease)}
+.btn:hover svg{transform:translateX(4px) rotate(-45deg)}
+.btn--solid{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn--solid:hover{color:var(--paper)}
+.burger{display:none;width:44px;height:44px;position:relative}
+.burger i{position:absolute;left:10px;right:10px;height:1px;background:var(--paper);transition:transform .6s var(--ease),top .6s var(--ease)}
+.burger i:nth-child(1){top:18px}.burger i:nth-child(2){top:25px}
+.menu-open .burger i:nth-child(1){top:21px;transform:rotate(45deg)}
+.menu-open .burger i:nth-child(2){top:21px;transform:rotate(-45deg)}
+.mobile-menu{
+  position:fixed;inset:0;z-index:65;background:var(--ink-2);
+  display:flex;flex-direction:column;justify-content:center;padding:0 var(--gutter);
+  clip-path:circle(0% at calc(100% - 40px) 40px);transition:clip-path .9s var(--ease-io);
+}
+.menu-open .mobile-menu{clip-path:circle(150% at calc(100% - 40px) 40px)}
+.mobile-menu a{display:block;font-family:var(--serif);font-size:clamp(2.6rem,11vw,4rem);line-height:1.15;overflow:hidden}
+.mobile-menu a span{display:inline-block;transform:translateY(110%);transition:transform .8s var(--ease)}
+.mobile-menu a small{font-family:var(--mono);font-size:.7rem;color:var(--shu);margin-right:14px;vertical-align:middle;letter-spacing:.1em}
+.menu-open .mobile-menu a span{transform:none}
+.mobile-menu__jp{position:absolute;right:var(--gutter);bottom:var(--gutter);writing-mode:vertical-rl;font-family:var(--jp);color:var(--muted);letter-spacing:.4em}
+
+/* ---------- shared ---------- */
+section{position:relative}
+.wrap{padding:0 var(--gutter)}
+.label{
+  display:inline-flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--paper-dim);
+}
+.label::before{content:"";width:0;height:1px;background:var(--shu);transition:width 1.2s var(--ease) .2s}
+.label.in::before{width:46px}
+.label b{color:var(--shu);font-weight:400}
+.h2{font-family:var(--serif);font-weight:300;font-size:clamp(2.8rem,7vw,7rem);line-height:.95;letter-spacing:-.02em}
+.h2 em{color:var(--shu-soft);font-weight:300}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1.2s var(--ease),transform 1.4s var(--ease);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+.mask{display:block;overflow:hidden;padding:0 .12em .08em 0;margin-bottom:-.08em}
+.mask>span{display:inline-block;transform:translateY(115%) rotate(4deg);transform-origin:0 100%;transition:transform 1.4s var(--ease);transition-delay:var(--d,0s)}
+.in .mask>span,.mask.in>span{transform:none}
+.split .ch{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(6px);transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:calc(var(--i) * 28ms + var(--d,0s))}
+.split.in .ch{opacity:1;transform:none;filter:none}
+.img-reveal{overflow:hidden;clip-path:inset(100% 0 0 0);transition:clip-path 1.6s var(--ease-io)}
+.img-reveal.in{clip-path:inset(0 0 0 0)}
+.img-reveal img{width:100%;height:100%;object-fit:cover;transform:scale(1.35);transition:transform 2.2s var(--ease)}
+.img-reveal.in img{transform:scale(1.12)}
+.par{will-change:transform}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:4vw;padding:120px var(--gutter) 90px;overflow:hidden}
+.hero__bgk{
+  position:absolute;left:-4vw;top:50%;transform:translateY(-50%);
+  font-family:var(--jp);font-weight:800;font-size:58vw;line-height:1;color:transparent;
+  -webkit-text-stroke:1px rgba(236,228,214,.04);pointer-events:none;user-select:none;
+}
+.hero__text{position:relative;z-index:2}
+.hero__eyebrow{display:flex;gap:18px;align-items:center;margin-bottom:clamp(24px,4vh,44px);opacity:0;transform:translateY(16px);transition:all 1.2s var(--ease) 1s}
+.loaded .hero__eyebrow{opacity:1;transform:none}
+.hero__eyebrow .dot{position:relative;width:6px;height:6px;border-radius:50%;background:var(--shu)}
+.hero__eyebrow .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(201,68,46,.55);animation:pulse 2.4s infinite;will-change:transform,opacity}
+@keyframes pulse{0%{transform:scale(1);opacity:1}70%{transform:scale(5);opacity:0}100%{transform:scale(5);opacity:0}}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(3.6rem,10.4vw,11.5rem);line-height:.86;letter-spacing:-.035em}
+.hero h1 .mask>span{transform:translateY(115%) rotate(6deg)}
+.loaded .hero h1 .mask>span{transform:none}
+.hero h1 em{font-weight:300;color:var(--shu-soft);padding-left:.55em}
+.hero h1 .thin{font-family:var(--sans);font-weight:200;font-size:.42em;letter-spacing:.02em;vertical-align:.55em;margin-right:.2em;color:var(--paper-dim)}
+.hero__lead{max-width:430px;margin-top:clamp(28px,5vh,52px);color:var(--paper-dim);font-size:1.02rem;opacity:0;transform:translateY(20px);transition:all 1.3s var(--ease) 1.5s}
+.hero__cta{display:flex;flex-wrap:wrap;gap:28px;align-items:center;margin-top:36px;opacity:0;transform:translateY(20px);transition:all 1.3s var(--ease) 1.7s}
+.loaded .hero__lead,.loaded .hero__cta{opacity:1;transform:none}
+.ulink{position:relative;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;padding:6px 0}
+.ulink::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform-origin:100% 50%;transition:transform .7s var(--ease)}
+.ulink:hover::after{transform:scaleX(0);transform-origin:100% 50%;animation:uline .9s var(--ease) .1s forwards}
+@keyframes uline{0%{transform:scaleX(0);transform-origin:0 50%}100%{transform:scaleX(1);transform-origin:0 50%}}
+.hero__visual{position:relative;height:min(78vh,760px);z-index:1}
+.hero__img{position:absolute;inset:0;overflow:hidden;clip-path:inset(100% 0 0 0);transition:clip-path 1.8s var(--ease-io) .5s;border-radius:2px}
+.loaded .hero__img{clip-path:inset(0 0 0 0)}
+.hero__img img{width:100%;height:120%;object-fit:cover;object-position:32% 50%;transform:scale(1.4);transition:transform 2.6s var(--ease) .5s;filter:saturate(.9) contrast(1.05)}
+.loaded .hero__img img{transform:scale(1)}
+.hero__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,10,.0) 55%,rgba(12,11,10,.65))}
+.hero__vert{
+  position:absolute;right:-8px;top:-10px;transform:translateX(100%);writing-mode:vertical-rl;
+  font-family:var(--jp);font-size:1.05rem;letter-spacing:.55em;color:var(--paper-dim);
+}
+.hero__vert span{display:inline-block;opacity:0;transform:translateY(-10px);transition:all .9s var(--ease);transition-delay:calc(1.6s + var(--i)*90ms)}
+.loaded .hero__vert span{opacity:1;transform:none}
+.badge{position:absolute;left:-62px;bottom:-56px;width:150px;height:150px;z-index:3;display:grid;place-items:center;opacity:0;transform:scale(.6) rotate(-40deg);transition:opacity 1.4s var(--ease) 1.9s,transform 1.4s var(--ease) 1.9s}
+.loaded .badge{opacity:1;transform:none}
+.badge svg{position:absolute;inset:0;width:100%;height:100%;animation:spin 18s linear infinite}
+.badge:hover svg{animation-duration:5s}
+.badge text{font-family:var(--mono);font-size:9.6px;letter-spacing:3.2px;fill:var(--paper);text-transform:uppercase}
+.badge__core{position:relative;z-index:1;width:64px;height:64px;border-radius:50%;background:var(--shu);display:grid;place-items:center;font-family:var(--jp);font-weight:800;font-size:1.6rem;color:var(--ink);transition:transform .6s var(--ease)}
+.badge:hover .badge__core{transform:scale(1.12) rotate(-12deg)}
+.badge::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(12,11,10,.75);backdrop-filter:blur(8px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero__foot{
+  position:absolute;left:var(--gutter);right:var(--gutter);bottom:28px;display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  opacity:0;transition:opacity 1.2s 2.1s;
+}
+.loaded .hero__foot{opacity:1}
+.scroll-ind{display:flex;align-items:center;gap:14px}
+.scroll-ind i{position:relative;width:1px;height:46px;background:rgba(236,228,214,.15);overflow:hidden}
+.scroll-ind i::after{content:"";position:absolute;left:0;top:-50%;width:100%;height:50%;background:var(--paper);animation:drip 2.2s var(--ease-io) infinite}
+@keyframes drip{to{top:110%}}
+
+/* ---------- marquee ---------- */
+.marquee{padding:clamp(50px,9vw,120px) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--ink)}
+.marquee__row{display:flex;white-space:nowrap;will-change:transform}
+.marquee__row span{display:inline-flex;align-items:center;gap:.5em;padding-right:.5em;flex-shrink:0}
+.marquee__row--a{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(3rem,8vw,7.6rem);line-height:1.1}
+.marquee__row--b{font-family:var(--jp);font-weight:800;font-size:clamp(2.4rem,6vw,5.6rem);line-height:1.2;color:transparent;-webkit-text-stroke:1px rgba(236,228,214,.35);margin-top:.15em}
+.marquee__row i{font-style:normal;color:var(--shu);font-size:.4em;-webkit-text-stroke:0}
+
+/* ---------- about ---------- */
+.about{padding:clamp(100px,16vw,220px) var(--gutter)}
+.about__grid{display:grid;grid-template-columns:120px 1fr .78fr;gap:clamp(24px,5vw,90px);align-items:start}
+.about__kanji{position:sticky;top:120px;writing-mode:vertical-rl;font-family:var(--jp);font-weight:800;font-size:clamp(4rem,8vw,7.5rem);line-height:1;color:var(--paper)}
+.about__kanji small{display:block;font-family:var(--mono);font-weight:300;font-size:.62rem;letter-spacing:.3em;color:var(--muted);margin-top:22px;text-transform:uppercase}
+.words{font-family:var(--serif);font-weight:300;font-size:clamp(1.9rem,3.5vw,3.4rem);line-height:1.18;letter-spacing:-.01em;margin-top:40px}
+.words .w{opacity:.14;transition:opacity .25s linear}
+.words .w.hl{font-style:italic;color:var(--shu-soft)}
+.about__body{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:60px;color:var(--paper-dim);max-width:640px}
+.about__media{position:relative;margin-top:110px}
+.about__img{aspect-ratio:3/4}
+.about__cap{display:flex;justify-content:space-between;margin-top:14px;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.enso{position:absolute;left:-28%;top:-16%;width:66%;pointer-events:none;z-index:2;mix-blend-mode:screen}
+.enso path{fill:none;stroke:var(--shu);stroke-linecap:round;stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 2.6s var(--ease-io) .4s}
+.enso.in path{stroke-dashoffset:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:clamp(80px,12vw,160px)}
+.stat{padding:34px 24px 0 0;border-right:1px solid var(--line);padding-left:24px}
+.stat:first-child{padding-left:0}.stat:last-child{border-right:0}
+.stat__n{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,6vw,5.6rem);line-height:1;display:flex;align-items:flex-start;gap:4px}
+.stat__n sup{font-family:var(--mono);font-size:.8rem;color:var(--shu);margin-top:.6em}
+.stat p{font-size:.84rem;color:var(--muted);margin-top:10px;max-width:180px}
+
+/* ---------- omakase horizontal ---------- */
+.journey{background:var(--ink-2)}
+.journey__sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.journey__track{display:flex;align-items:center;gap:clamp(20px,3vw,48px);padding:0 var(--gutter);will-change:transform;height:100%}
+.journey__intro{flex:0 0 min(560px,80vw);padding-right:4vw}
+.journey__intro p{color:var(--paper-dim);max-width:380px;margin-top:30px}
+.journey__price{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;margin-top:36px;font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.journey__swipe{display:none}
+@keyframes nudge{0%,100%{transform:none}50%{transform:translateX(8px)}}
+.journey__price b{white-space:nowrap;text-transform:none;font-family:var(--serif);font-weight:300;font-size:3rem;color:var(--paper);letter-spacing:0}
+.course{flex:0 0 clamp(280px,27vw,420px);position:relative}
+.course:nth-child(odd){transform:translateY(5vh)}
+.course:nth-child(even){transform:translateY(-5vh)}
+.course__num{position:absolute;top:-.55em;right:-.1em;z-index:2;font-family:var(--jp);font-weight:800;font-size:clamp(4rem,7vw,7rem);line-height:1;color:var(--paper);mix-blend-mode:difference;pointer-events:none}
+.course__img{aspect-ratio:4/5;overflow:hidden;position:relative}
+.course__img img{width:100%;height:100%;object-fit:cover;transform:scale(1.15);transition:transform 1.4s var(--ease),filter .8s;filter:grayscale(.55) brightness(.8)}
+.course:hover .course__img img{transform:scale(1.04);filter:none}
+.course__meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px;gap:12px}
+.course h3{font-family:var(--serif);font-weight:400;font-size:1.9rem;line-height:1}
+.course h3 small{display:block;font-family:var(--jp);font-size:.85rem;color:var(--shu-soft);margin-top:8px;letter-spacing:.2em}
+.course p{font-size:.86rem;color:var(--muted);margin-top:10px;max-width:92%}
+.course__idx{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.15em}
+.journey__end{flex:0 0 min(520px,80vw);text-align:center;padding:0 4vw}
+.journey__end .h2{font-size:clamp(2.6rem,5vw,4.8rem)}
+.journey__end .btn{margin-top:36px}
+.journey__hud{position:absolute;left:var(--gutter);right:var(--gutter);bottom:34px;display:flex;align-items:center;gap:20px;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--muted)}
+.journey__bar{flex:1;height:1px;background:var(--line);position:relative}
+.journey__bar i{position:absolute;inset:0;background:var(--paper);transform-origin:0 50%;transform:scaleX(0)}
+.journey__hud b{color:var(--paper);font-weight:400}
+
+/* ---------- menu ---------- */
+.menu{padding:clamp(100px,14vw,200px) var(--gutter)}
+.menu__head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:clamp(50px,7vw,90px)}
+.menu__head .h2{margin-top:26px}
+.tabs{display:flex;gap:6px;padding:6px;border:1px solid var(--line);border-radius:100px;position:relative}
+.tab{position:relative;z-index:1;padding:11px 22px;border-radius:100px;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-dim);transition:color .5s}
+.tab.active{color:var(--ink)}
+.tab small{font-family:var(--jp);margin-left:6px;letter-spacing:0;font-size:.8rem}
+.tabs__pill{position:absolute;top:6px;bottom:6px;left:0;background:var(--paper);border-radius:100px;transition:transform .7s var(--ease),width .7s var(--ease)}
+.dishes{list-style:none;border-top:1px solid var(--line)}
+.dish{
+  display:grid;grid-template-columns:70px 1.3fr 1fr auto;align-items:center;gap:24px;
+  padding:30px 0;border-bottom:1px solid var(--line);position:relative;overflow:hidden;
+}
+.dish::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(201,68,46,.12),transparent 70%);transform:scaleX(0);transform-origin:0 50%;transition:transform .9s var(--ease)}
+.dish:hover::before{transform:none}
+.dish>*{position:relative;transition:transform .7s var(--ease),opacity .7s var(--ease)}
+.dish__i{font-family:var(--mono);font-size:.72rem;color:var(--muted);letter-spacing:.1em}
+.dish__name{font-family:var(--serif);font-weight:300;font-size:clamp(1.9rem,3.6vw,3.2rem);line-height:1;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.dish__name small{font-family:var(--jp);font-size:1rem;color:var(--shu-soft);letter-spacing:.2em}
+.dish:hover .dish__name{transform:translateX(18px);font-style:italic}
+.dish__desc{font-size:.9rem;color:var(--muted)}
+.dish__price{font-family:var(--mono);font-size:.95rem;letter-spacing:.05em;white-space:nowrap}
+.dish__price small{color:var(--muted);font-size:.7rem;margin-left:4px}
+.dish.enter>*{opacity:0;transform:translateY(30px)}
+.menu__note{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-top:30px;font-size:.82rem;color:var(--muted)}
+.preview{
+  position:fixed;top:0;left:0;width:260px;height:330px;pointer-events:none;z-index:60;overflow:hidden;border-radius:2px;
+  clip-path:inset(50% 50% 50% 50%);transition:clip-path .7s var(--ease);
+}
+.preview.on{clip-path:inset(0 0 0 0)}
+.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.2);transition:transform 1s var(--ease),opacity .4s}
+.preview.on img{transform:scale(1)}
+@media (hover:none){.preview{display:none}}
+
+/* ---------- chef ---------- */
+.chef{padding:clamp(80px,10vw,140px) var(--gutter) clamp(100px,14vw,200px);display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,7vw,120px);align-items:center}
+.chef__img{position:relative;aspect-ratio:4/5}
+.chef__img .img-reveal{position:absolute;inset:0}
+.chef__img img{filter:grayscale(1) contrast(1.1) brightness(.85);transition:filter 1.2s var(--ease),transform 2.2s var(--ease)}
+.chef__img:hover img{filter:grayscale(0) contrast(1.05)}
+.chef__tag{position:absolute;right:-18px;bottom:40px;z-index:2;background:var(--shu);color:var(--paper);padding:14px 18px;writing-mode:vertical-rl;font-family:var(--jp);font-weight:600;letter-spacing:.35em;font-size:.95rem}
+.quote{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,4.4vw,4.4rem);line-height:1.06;letter-spacing:-.015em;margin-top:clamp(70px,8vw,110px);position:relative}
+.quote::before{content:"“";position:absolute;left:-.12em;top:-.55em;font-size:3.2em;color:var(--shu);opacity:.9;line-height:1;font-style:italic}
+.quote em{color:var(--shu-soft)}
+.chef__sig{display:flex;align-items:center;gap:22px;margin-top:46px}
+.chef__sig .jp{font-family:var(--jp);font-weight:600;font-size:2rem;letter-spacing:.15em}
+.chef__sig div{font-size:.84rem;color:var(--muted);line-height:1.5}
+.chef__sig div b{display:block;color:var(--paper);font-weight:500;font-size:.95rem;letter-spacing:.06em}
+.chef__bio{color:var(--paper-dim);max-width:520px;margin-top:34px}
+.timeline{display:flex;gap:0;margin-top:46px;border-top:1px solid var(--line)}
+.timeline div{flex:1;padding-top:16px;position:relative}
+.timeline div::before{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--paper)}
+.timeline b{display:block;font-family:var(--mono);font-weight:400;font-size:.72rem;letter-spacing:.14em;color:var(--shu-soft)}
+.timeline span{font-size:.85rem;color:var(--paper-dim)}
+
+/* ---------- gallery ---------- */
+.gallery{padding:clamp(60px,8vw,120px) var(--gutter) clamp(100px,14vw,200px);background:var(--ink-2)}
+.gallery__head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.gallery__head p{max-width:340px;color:var(--muted)}
+.gallery__head .h2{margin-top:26px}
+.ggrid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(12px,1.6vw,24px);margin-top:clamp(50px,7vw,100px)}
+.gi{position:relative;overflow:hidden}
+.gi .img-reveal{width:100%;height:100%}
+.gi img{transition:transform 1.6s var(--ease),filter 1s}
+.gi:hover img{transform:scale(1.04)!important}
+.gi figcaption{position:absolute;left:16px;bottom:14px;font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--paper);opacity:0;transform:translateY(10px);transition:all .6s var(--ease)}
+.gi:hover figcaption{opacity:1;transform:none}
+.gi:nth-child(1){grid-column:1/8;aspect-ratio:16/10}
+.gi:nth-child(2){grid-column:8/13;aspect-ratio:4/5;margin-top:18vh}
+.gi:nth-child(3){grid-column:2/6;aspect-ratio:3/4;margin-top:-10vh}
+.gi:nth-child(4){grid-column:6/13;aspect-ratio:16/11;margin-top:6vh}
+.gi:nth-child(5){grid-column:1/5;aspect-ratio:1/1;margin-top:4vh}
+.gi:nth-child(6){grid-column:5/10;aspect-ratio:5/4;margin-top:14vh}
+
+/* ---------- reservation ---------- */
+.reserve{padding:clamp(100px,14vw,200px) var(--gutter);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(40px,7vw,120px)}
+.reserve__info .h2{margin-top:26px}
+.info{margin-top:56px;display:grid;gap:30px}
+.info div{display:grid;grid-template-columns:120px 1fr;gap:20px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.info dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding-top:4px}
+.info dd{font-family:var(--serif);font-size:1.4rem;line-height:1.35}
+.info dd small{display:block;font-family:var(--sans);font-size:.82rem;color:var(--muted)}
+.form{position:relative;background:var(--ink-3);border:1px solid var(--line);padding:clamp(28px,4vw,60px);overflow:hidden}
+.form h3{font-family:var(--serif);font-weight:300;font-size:2.2rem;line-height:1}
+.form h3 small{font-family:var(--jp);font-size:1rem;color:var(--shu-soft);margin-left:12px;letter-spacing:.2em}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px 28px;margin-top:44px}
+.field{position:relative}
+.field.full{grid-column:1/-1}
+.field input,.field textarea,.field select{
+  width:100%;background:transparent;border:0;border-bottom:1px solid rgba(236,228,214,.2);
+  color:var(--paper);font:inherit;font-size:1.05rem;padding:14px 0 10px;outline:none;border-radius:0;
+  color-scheme:dark;transition:border-color .4s;
+}
+.field textarea{resize:none;height:84px}
+.field>label{position:absolute;left:0;top:14px;font-size:.92rem;color:var(--muted);pointer-events:none;transition:all .5s var(--ease);transform-origin:0 0}
+.field input:focus+label,.field input:not(:placeholder-shown)+label,
+.field textarea:focus+label,.field textarea:not(:placeholder-shown)+label,
+.field.static>label{top:-12px;transform:scale(.78);color:var(--paper-dim);letter-spacing:.06em}
+.field::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--shu);transform:scaleX(0);transform-origin:0 50%;transition:transform .8s var(--ease)}
+.field:focus-within::after{transform:scaleX(1)}
+.field.err::after{transform:scaleX(1);background:#e3735f}
+.field .msg{position:absolute;right:0;top:-10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:#e3735f;opacity:0;transition:opacity .3s;text-transform:uppercase}
+.field.err .msg{opacity:1}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:block;padding:10px 18px;border:1px solid rgba(236,228,214,.2);border-radius:100px;font-family:var(--mono);font-size:.82rem;transition:all .4s var(--ease);cursor:pointer}
+.chip span:hover{border-color:var(--paper)}
+.chip input:checked+span{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.chip input:focus-visible+span{outline:1px solid var(--shu);outline-offset:3px}
+.chip--off span{opacity:.3;text-decoration:line-through;pointer-events:none}
+.stepper{display:flex;align-items:center;gap:20px;margin-top:22px}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(236,228,214,.2);display:grid;place-items:center;font-size:1.2rem;transition:all .4s var(--ease)}
+.stepper button:hover{background:var(--paper);color:var(--ink)}
+.stepper output{font-family:var(--serif);font-size:2.6rem;min-width:44px;text-align:center;line-height:1;display:inline-block}
+.stepper output.bump{animation:bump .5s var(--ease)}
+@keyframes bump{0%{transform:translateY(-12px);opacity:0}100%{transform:none;opacity:1}}
+.stepper small{font-size:.82rem;color:var(--muted)}
+.seats{display:flex;gap:6px;margin-top:14px}
+.seats i{width:18px;height:6px;border-radius:3px;background:rgba(236,228,214,.12);transition:background .4s var(--ease)}
+.seats i.on{background:var(--shu)}
+.form__foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;margin-top:44px}
+.form__foot p{font-size:.8rem;color:var(--muted);max-width:280px}
+.sublabel{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.success{
+  position:absolute;inset:0;background:var(--ink-3);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;
+  opacity:0;visibility:hidden;transition:opacity .8s var(--ease),visibility .8s;
+}
+.success.on{opacity:1;visibility:visible}
+.hanko{width:120px;height:120px;border:3px solid var(--shu);border-radius:10px;display:grid;place-items:center;font-family:var(--jp);font-weight:800;font-size:2.4rem;color:var(--shu);line-height:1.05;writing-mode:vertical-rl;transform:scale(2.4) rotate(-18deg);opacity:0}
+.success.on .hanko{animation:stamp .7s cubic-bezier(.5,0,.2,1.4) .35s forwards}
+@keyframes stamp{0%{transform:scale(2.4) rotate(-18deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(-8deg);opacity:.92}}
+.success h4{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-top:40px;line-height:1.05}
+.success h4 em{color:var(--shu-soft)}
+.success p{color:var(--paper-dim);margin-top:16px;max-width:380px}
+.success .ulink{margin-top:30px}
+
+/* ---------- footer ---------- */
+.footer{padding:clamp(80px,10vw,140px) var(--gutter) 30px;border-top:1px solid var(--line);overflow:hidden;position:relative}
+.footer__top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+.footer__top h5{font-family:var(--mono);font-weight:400;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.footer__top p,.footer__top a{display:block;color:var(--paper-dim);font-size:.92rem;line-height:1.9}
+.footer__top a{transition:color .3s,transform .5s var(--ease)}
+.footer__top a:hover{color:var(--paper);transform:translateX(6px)}
+.footer__big{display:flex;justify-content:space-between;align-items:flex-end;margin-top:clamp(60px,10vw,140px);font-family:var(--serif);font-weight:300;font-size:clamp(5rem,23vw,24rem);line-height:.78;letter-spacing:-.04em}
+.footer__big .fl>span{display:inline-block;transition:transform .8s var(--ease),color .5s}
+.footer__big .fl>span:hover{transform:translateY(-.08em) skewX(-8deg);color:var(--shu-soft)}
+.footer__big .k{font-family:var(--jp);font-weight:800;font-size:.6em;color:var(--shu);letter-spacing:0}
+.footer__bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.totop{display:inline-flex;align-items:center;gap:10px}
+.totop i{display:inline-block;transition:transform .5s var(--ease)}
+.totop:hover i{transform:translateY(-4px)}
+
+/* ---------- v2: ink transition ---------- */
+.ink{position:fixed;inset:0;width:100%;height:100%;z-index:85;pointer-events:none;visibility:hidden}
+.ink.on{visibility:visible;pointer-events:auto}
+.ink__label{position:fixed;inset:0;z-index:86;display:grid;place-items:center;text-align:center;pointer-events:none;opacity:0;transform:scale(.96);transition:opacity .45s var(--ease),transform .9s var(--ease)}
+.ink__label.on{opacity:1;transform:none}
+.ink__label small{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;color:var(--muted)}
+.ink__label b{display:block;font-family:var(--jp);font-weight:800;font-size:clamp(4.5rem,12vw,9rem);line-height:1.1;color:var(--shu)}
+.ink__label span{display:block;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(2rem,5vw,3.4rem);line-height:1}
+
+/* ---------- v2: hero smoke ---------- */
+.hero__smoke{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity 2.5s 1.2s}
+.loaded .hero__smoke{opacity:1}
+
+/* ---------- v2: calligraphy ---------- */
+.kanji-draw{display:block;overflow:visible}
+.kanji-draw path{fill:none;stroke:currentColor;stroke-width:6.5;stroke-linecap:round;stroke-linejoin:round}
+.kanji-draw .ghost path{stroke:rgba(236,228,214,.07);stroke-width:6.5}
+.loader__kanji .kanji-draw{width:clamp(9rem,26vw,16rem);height:auto;color:var(--paper)}
+.footer__big .k .kanji-draw{width:1.08em;height:1.08em}
+.footer__big .k .kanji-draw .ghost path{stroke:rgba(201,68,46,.12)}
+
+/* ---------- v2: falling letters ---------- */
+.footer__big .fl{display:inline-block;opacity:0;transform:translateY(-150%) rotate(var(--r));transition:transform 1.4s cubic-bezier(.3,1.55,.5,1),opacity .35s;transition-delay:calc(var(--i) * 130ms)}
+.footer__big.in .fl{opacity:1;transform:none}
+
+/* ---------- v2: language switch ---------- */
+.nav__right{display:flex;align-items:center;gap:16px}
+.lang{position:relative;display:flex;padding:3px;border:1px solid rgba(236,228,214,.25);border-radius:100px}
+.lang button{position:relative;z-index:1;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;padding:7px 11px;color:var(--paper-dim);transition:color .5s var(--ease)}
+.lang button[aria-pressed="true"]{color:var(--ink)}
+.lang__pill{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);background:var(--paper);border-radius:100px;transition:transform .7s var(--ease)}
+.lang[data-l="en"] .lang__pill{transform:translateX(100%)}
+.t{font-style:inherit;font-weight:inherit}
+
+/* ---------- v2: directions / map ---------- */
+.visit{padding:clamp(80px,12vw,180px) var(--gutter);border-top:1px solid var(--line);background:var(--ink-2)}
+.visit__head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.visit__head .h2{margin-top:26px}
+.visit__head p{max-width:390px;color:var(--muted)}
+.visit__grid{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(30px,5vw,80px);margin-top:clamp(50px,7vw,90px)}
+.map-wrap{position:relative;min-height:520px;border:1px solid var(--line);overflow:hidden;background:#100f0d}
+.map{position:absolute;inset:0;background:#100f0d}
+.map .leaflet-tile-pane{filter:grayscale(1) invert(1) sepia(.32) brightness(.72) contrast(1.22)}
+.map-wrap::after{content:"";position:absolute;inset:0;z-index:450;pointer-events:none;box-shadow:inset 0 0 140px 20px rgba(16,15,13,.9)}
+.leaflet-container{font-family:var(--sans);background:#100f0d;outline:none}
+.leaflet-container:focus{outline:none}
+.leaflet-bar{border:1px solid var(--line)!important;box-shadow:none!important;border-radius:0!important}
+.leaflet-bar a,.leaflet-bar a:hover{width:38px;height:38px;line-height:38px;background:rgba(20,18,15,.92);color:var(--paper);border-bottom:1px solid var(--line)!important;font-family:var(--sans);font-weight:300;transition:background .3s}
+.leaflet-bar a:hover{background:var(--shu)}
+.leaflet-bar a:first-child,.leaflet-bar a:last-child{border-radius:0!important}
+.leaflet-control-attribution{background:rgba(12,11,10,.75)!important;color:var(--muted)!important;font-family:var(--mono);font-size:9px!important}
+.leaflet-control-attribution a{color:var(--paper-dim)!important}
+.leaflet-tooltip.pin-tip{background:rgba(12,11,10,.92);border:1px solid var(--line);border-radius:0;box-shadow:none;color:var(--paper);padding:10px 16px;font-family:var(--serif);font-size:20px;letter-spacing:.24em;white-space:nowrap}
+.leaflet-tooltip.pin-tip::before{display:none}
+.pin-tip b{font-weight:500}
+.pin-tip small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);margin-top:4px}
+.pin{position:relative;width:54px;height:54px}
+.pin span{position:absolute;inset:8px;z-index:2;display:grid;place-items:center;background:var(--shu);color:var(--ink);font-family:var(--jp);font-weight:800;font-size:20px;border-radius:6px;transform:rotate(-6deg);box-shadow:0 12px 30px rgba(0,0,0,.6)}
+.pin i{position:absolute;inset:0;border:1px solid var(--shu);border-radius:50%;opacity:0;animation:ring 2.8s var(--ease) infinite}
+.pin i:nth-child(2){animation-delay:1.4s}
+@keyframes ring{0%{transform:scale(.5);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+.stop-pin{width:26px;height:26px;border-radius:50%;background:var(--paper);color:var(--ink);display:grid;place-items:center;font-family:var(--mono);font-size:11px;box-shadow:0 0 0 5px rgba(236,228,214,.15)}
+.route-line{animation:dash 1.1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-24}}
+.map__hint,.map__corner{position:absolute;z-index:600;font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;pointer-events:none}
+.map__hint{left:16px;bottom:16px;padding:9px 14px;background:rgba(12,11,10,.8);border:1px solid var(--line);color:var(--paper-dim);transition:opacity .6s}
+.map__hint.off{opacity:0}
+.map__corner{right:16px;top:16px;color:var(--muted)}
+.routes{display:flex;flex-direction:column}
+.route{display:grid;grid-template-columns:56px 1fr;gap:18px;padding:28px 0;border-bottom:1px solid var(--line)}
+.route:first-child{border-top:1px solid var(--line)}
+.route__ic{width:44px;height:44px;border-radius:50%;border:1px solid rgba(236,228,214,.25);display:grid;place-items:center;font-family:var(--mono);font-size:.85rem;color:var(--shu-soft);transition:all .5s var(--ease)}
+.route:hover .route__ic{background:var(--shu);border-color:var(--shu);color:var(--paper);transform:rotate(-8deg)}
+.route h4{font-family:var(--serif);font-weight:400;font-size:1.7rem;line-height:1}
+.route p{margin-top:10px;font-size:.9rem;color:var(--muted)}
+.route p b{color:var(--paper);font-weight:500}
+.routes__cta{display:flex;align-items:center;flex-wrap:wrap;gap:20px 28px;margin-top:34px}
+.toast{position:fixed;left:50%;bottom:28px;z-index:92;transform:translate(-50%,20px);padding:12px 20px;border-radius:100px;background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;opacity:0;pointer-events:none;transition:all .6s var(--ease)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:900px){
+  .visit__grid{grid-template-columns:1fr}
+  .map-wrap{min-height:400px}
+  .nav__right{gap:10px}
+}
+@media (max-width:600px){
+  .map-wrap{min-height:360px}
+  .leaflet-tooltip.pin-tip{font-size:15px;padding:8px 12px}
+  .map__corner{display:none}
+}
+
+/* ---------- quick dock: menu + phone + booking ---------- */
+.dock{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:60;display:flex;align-items:stretch;gap:4px;padding:6px;border-radius:100px;
+  background:rgba(20,18,15,.8);border:1px solid rgba(236,228,214,.14);box-shadow:0 18px 50px -12px rgba(0,0,0,.75),inset 0 1px 0 rgba(236,228,214,.06);
+  backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);
+  transform:translate(-50%,calc(100% + 40px));opacity:0;pointer-events:none;transition:transform .8s var(--ease),opacity .5s}
+.dock.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.dock__btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:100px;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--paper);white-space:nowrap;transition:background .35s,color .35s}
+.dock__btn:hover{background:rgba(236,228,214,.08)}
+.dock__btn svg{width:17px;height:17px;flex:none;color:var(--shu-soft)}
+.dock__btn b{font-family:var(--jp);font-weight:800;font-size:1.05rem;letter-spacing:0;line-height:1;color:var(--shu-soft)}
+.dock__num{font-family:var(--sans);font-size:.85rem;letter-spacing:.02em;text-transform:none;color:var(--paper-dim)}
+.dock__btn--book{background:var(--shu)}
+.dock__btn--book:hover{background:var(--shu-soft)}
+.dock__btn--book b{color:var(--paper)}
+.dock__sep{width:1px;margin:10px 2px;background:var(--line)}
+
+/* ---------- menu sheet ---------- */
+.sheet{position:fixed;inset:0;z-index:75;visibility:hidden;pointer-events:none;transition:visibility 0s .7s}
+.sheet.open{visibility:visible;pointer-events:auto;transition:none}
+.sheet__bg{position:absolute;inset:0;background:rgba(8,7,6,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);opacity:0;transition:opacity .5s}
+.sheet.open .sheet__bg{opacity:1}
+.sheet__panel{position:absolute;top:0;right:0;bottom:0;width:min(500px,100%);display:flex;flex-direction:column;background:var(--ink-2);border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);transform:translateX(100%);transition:transform .7s var(--ease-io)}
+.sheet.open .sheet__panel{transform:none}
+.sheet__grab{display:none}
+.sheet__head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 28px 16px}
+.sheet__head h2{font-family:var(--serif);font-weight:300;font-size:2.4rem;line-height:1}
+.sheet__head h2 b{font-family:var(--jp);font-weight:800;font-size:.6em;color:var(--shu);vertical-align:.25em;margin-left:6px}
+.sheet__x{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:background .3s,border-color .3s}
+.sheet__x:hover{background:rgba(236,228,214,.08);border-color:rgba(236,228,214,.3)}
+.sheet__x svg{width:16px;height:16px}
+.sheet__nav{display:flex;gap:6px;padding:4px 28px 14px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+.sheet__nav::-webkit-scrollbar{display:none}
+.sheet__nav button{padding:9px 14px;border:1px solid var(--line);border-radius:100px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-dim);white-space:nowrap;transition:all .35s var(--ease)}
+.sheet__nav button small{font-family:var(--jp);letter-spacing:0;margin-left:4px}
+.sheet__nav button.on{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.sheet__body{position:relative;flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 28px 28px;-webkit-overflow-scrolling:touch}
+.sheet__omakase{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:20px;padding:18px 20px;border:1px solid rgba(201,68,46,.4);background:rgba(201,68,46,.07)}
+.sheet__omakase b{display:block;font-family:var(--serif);font-weight:400;font-size:1.4rem;line-height:1.15}
+.sheet__omakase span{display:block;margin-top:4px;font-size:.84rem;color:var(--muted)}
+.sheet__omakase em{font-style:normal;font-family:var(--serif);font-size:1.9rem;line-height:1;white-space:nowrap;color:var(--paper)}
+.sheet__omakase em small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--muted);text-align:right;margin-top:4px}
+.sheet__cat{margin-top:28px}
+.sheet__cat h3{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(201,68,46,.35);font-family:var(--mono);font-weight:400;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--shu-soft)}
+.sheet__cat h3 small{font-family:var(--jp);font-size:.9rem;letter-spacing:.1em;color:var(--muted)}
+.sheet__item{display:grid;grid-template-columns:1fr auto;gap:3px 16px;padding:15px 0;border-bottom:1px solid var(--line)}
+.sheet__item b{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.15}
+.sheet__item b small{font-family:var(--jp);font-size:.62em;color:var(--shu-soft);letter-spacing:.15em;margin-left:8px}
+.sheet__item em{font-style:normal;font-family:var(--mono);font-size:.92rem;white-space:nowrap;padding-top:4px}
+.sheet__item em small{color:var(--muted);font-size:.72rem}
+.sheet__item span{font-size:.86rem;color:var(--muted)}
+.sheet__note{margin-top:20px;font-size:.8rem;color:var(--muted)}
+.sheet__foot{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 28px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--ink-2)}
+.sheet__foot a,.sheet__foot button{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;border-radius:100px;font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;transition:background .35s,border-color .35s}
+.sheet__foot svg{width:16px;height:16px}
+.sheet__call{border:1px solid rgba(236,228,214,.3)}
+.sheet__call:hover{border-color:var(--paper);background:rgba(236,228,214,.06)}
+.sheet__book{background:var(--shu)}
+.sheet__book:hover{background:var(--shu-soft)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .about__grid{grid-template-columns:80px 1fr}
+  .about__media{grid-column:2;max-width:520px;margin-top:40px}
+  .enso{left:auto;right:-10%;top:-12%;width:50%}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(3){padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line);margin-top:34px}
+  .dish{grid-template-columns:50px 1fr auto}
+  .dish__desc{grid-column:2/3;grid-row:2;margin-top:-10px}
+}
+@media (max-width:900px){
+  .nav__links,.nav .btn{display:none}
+  .burger{display:block}
+  .hero{grid-template-columns:1fr;padding-top:110px;gap:50px;padding-bottom:110px}
+  .hero__visual{height:62vh;margin-right:28px}
+  .badge{left:auto;right:-28px;bottom:-50px;width:120px;height:120px}
+  .badge__core{width:50px;height:50px;font-size:1.3rem}
+  .hero__vert{display:none}
+  .menu-open .nav{transform:none!important;background:transparent;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .mobile-menu__jp{bottom:auto;top:110px;font-size:.8rem}
+  .journey__swipe{display:flex;align-items:center;gap:10px;margin-top:28px;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--shu-soft)}
+  .journey__swipe i{font-style:normal;animation:nudge 1.6s var(--ease) infinite}
+  .journey__sticky{position:relative;height:auto;padding:70px 0 70px}
+  .journey__track{overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter);padding-top:70px;padding-bottom:10px;transform:none!important;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .journey__track::-webkit-scrollbar{display:none}
+  .course,.journey__intro,.journey__end{scroll-snap-align:start}
+  .course:nth-child(odd),.course:nth-child(even){transform:none}
+  .course{flex-basis:76vw}
+  .journey__hud{display:none}
+  .chef,.reserve{grid-template-columns:1fr}
+  .chef__img{max-width:520px}
+  .chef__tag{right:-10px}
+  .ggrid{grid-template-columns:1fr 1fr}
+  .gi:nth-child(n){grid-column:auto;margin-top:0;aspect-ratio:4/5}
+  .gi:nth-child(1),.gi:nth-child(4){grid-column:1/-1;aspect-ratio:16/11}
+  .footer__top{grid-template-columns:1fr 1fr}
+}
+@media (max-width:600px){
+  .about__grid{grid-template-columns:1fr}
+  .about__kanji{position:relative;top:0;writing-mode:horizontal-tb;font-size:4rem;display:flex;align-items:baseline;gap:18px}
+  .about__kanji small{margin-top:0}
+  .about__media{grid-column:1}
+  .about__body{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{padding-left:0!important;padding-right:12px}
+  .tabs{width:100%;overflow-x:auto;scrollbar-width:none}
+  .tab{padding:10px 14px;white-space:nowrap}
+  .tab small{display:none}
+  .dish{grid-template-columns:1fr auto;gap:8px 16px;padding:24px 0}
+  .dish__i{display:none}
+  .dish__desc{grid-column:1/-1;grid-row:auto;margin-top:0}
+  .fgrid{grid-template-columns:1fr}
+  .info div{grid-template-columns:1fr;gap:6px}
+  .footer__top{grid-template-columns:1fr}
+  .hero__foot .coords{display:none}
+  .hero{min-height:0;padding-top:96px;gap:36px}
+  .hero__eyebrow{font-size:.6rem;letter-spacing:.14em;gap:10px;margin-bottom:22px}
+  .hero__eyebrow::before{display:none}
+  .hero__lead{margin-top:24px;font-size:.95rem}
+  .hero__cta{margin-top:28px;gap:18px 24px}
+  .hero__cta .btn{padding:14px 22px}
+  .hero__visual{height:56vh;margin-right:0}
+  .badge{right:-6px;bottom:-44px;width:110px;height:110px}
+  .chef__sig{gap:18px}
+  .chef__sig .jp{font-size:1.5rem;white-space:nowrap}
+  .marquee__row--a{font-size:3.2rem}
+}
+/* decorative elements (e.g. the ensō circle) must never widen the page on phones */
+main{overflow-x:clip}
+/* six nav links + language switch + button: tighten the menu on narrower laptops */
+@media (min-width:901px) and (max-width:1240px){
+  .nav{gap:16px}
+  .nav__links{gap:16px}
+  .nav__links a{font-size:.7rem;letter-spacing:.1em}
+  .nav .btn{padding:12px 16px;letter-spacing:.14em}
+  .nav__right{gap:10px}
+}
+@media (min-width:901px) and (max-width:1020px){
+  .nav .btn svg{display:none}
+  .logo{letter-spacing:.2em}
+}
+/* quick dock + menu sheet on smaller screens */
+.toast{bottom:100px}
+/* the dock is visible from the first screen: keep the hero's bottom line above it */
+@media (min-width:901px){
+  /* first screen fits the window with the dock below it: shorter photo, badge and bottom line stay clear */
+  .hero{padding-bottom:150px}
+  .hero__visual{height:min(calc(100svh - 300px),760px)}
+  .hero__foot{bottom:100px}
+  /* headline also scales with window height, so short laptop screens fit too */
+  .hero h1{font-size:clamp(3.6rem,min(10.4vw,15vh),11.5rem)}
+}
+@media (min-width:901px) and (max-height:800px){
+  .hero{padding-top:96px}
+  .hero__eyebrow{margin-bottom:18px}
+  .hero__lead{margin-top:20px}
+  .hero__cta{margin-top:22px}
+  .hero__foot .coords{display:none}
+}
+@media (max-width:900px){
+  .dock__num{display:none}
+  .hero{padding-bottom:190px}
+}
+@media (max-width:600px){
+  .hero{padding-bottom:160px}
+  .hero__foot{bottom:86px}
+}
+@media (max-width:600px){
+  .dock{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateY(calc(100% + 40px))}
+  .dock.on{transform:none}
+  .dock__btn{flex:1 1 0;padding:0 8px;gap:8px;font-size:.66rem;letter-spacing:.12em}
+  .dock__sep{display:none}
+  .sheet__panel{top:auto;left:0;width:100%;height:88vh;height:88dvh;border-left:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;transform:translateY(100%);box-shadow:0 -30px 80px rgba(0,0,0,.5)}
+  .sheet__grab{display:block;width:44px;height:4px;margin:10px auto 0;border-radius:2px;background:rgba(236,228,214,.25)}
+  .sheet__head{padding:12px 20px 12px}
+  .sheet__head h2{font-size:2rem}
+  .sheet__nav{padding:2px 20px 12px}
+  .sheet__body{padding:2px 20px 24px}
+  .sheet__foot{padding-left:20px;padding-right:20px}
+  .footer{padding-bottom:110px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .grain{display:none}
+}
+</style>
+</head>
+<body class="is-loading">
+
+<div class="grain" aria-hidden="true"></div>
+<svg class="ink" aria-hidden="true" preserveAspectRatio="none">
+  <defs>
+    <filter id="ink-f" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence id="ink-turb" type="fractalNoise" baseFrequency=".011" numOctaves="3" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="140" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="brush" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <g id="ink-shu" fill="#c9442e" filter="url(#ink-f)"></g>
+  <g id="ink-dark" fill="#0c0b0a" filter="url(#ink-f)"></g>
+</svg>
+<div class="ink__label" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><span>Zobacz</span></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="preview" aria-hidden="true"><img alt=""></div>
+
+<!-- PRELOADER -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__seal">墨</div>
+  <div class="loader__kanji"></div>
+  <div class="loader__meta">
+    <div data-i18n="loader">Sumi — Omakase<br>Warszawa</div>
+    <div class="loader__count">0</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav">
+  <a href="#top" class="logo" data-hover aria-label="SUMI — strona główna">SUMI <b>墨</b></a>
+  <ul class="nav__links">
+    <li><a href="#filozofia" data-hover><span data-t="Filozofia" data-i18n="nav1">Filozofia</span></a></li>
+    <li><a href="#omakase" data-hover><span data-t="Omakase" data-i18n="nav2">Omakase</span></a></li>
+    <li><a href="#karta" data-hover><span data-t="Karta" data-i18n="nav3">Karta</span></a></li>
+    <li><a href="#szef" data-hover><span data-t="Szef kuchni" data-i18n="nav4">Szef kuchni</span></a></li>
+    <li><a href="#wnetrze" data-hover><span data-t="Wnętrze" data-i18n="nav5">Wnętrze</span></a></li>
+    <li><a href="/blog/" data-hover><span data-t="Blog">Blog</span></a></li>
+  </ul>
+  <div class="nav__right">
+    <div class="lang" role="group" aria-label="Język / Language" data-l="pl">
+      <span class="lang__pill" aria-hidden="true"></span>
+      <button type="button" data-lang="pl" aria-pressed="true" data-hover>PL</button>
+      <button type="button" data-lang="en" aria-pressed="false" data-hover>EN</button>
+    </div>
+    <a href="#rezerwacja" class="btn magnetic" data-hover><span data-i18n="navRes">Rezerwacja</span>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h14M9 2l6 6-6 6"/></svg></a>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<nav class="mobile-menu" aria-label="Menu mobilne">
+  <a href="#filozofia"><span><small>01</small><i class="t" data-i18n="nav1">Filozofia</i></span></a>
+  <a href="#omakase"><span><small>02</small><i class="t" data-i18n="nav2">Omakase</i></span></a>
+  <a href="#karta"><span><small>03</small><i class="t" data-i18n="nav3">Karta</i></span></a>
+  <a href="#szef"><span><small>04</small><i class="t" data-i18n="nav4">Szef kuchni</i></span></a>
+  <a href="#rezerwacja"><span><small>05</small><i class="t" data-i18n="navRes">Rezerwacja</i></span></a>
+  <a href="#dojazd"><span><small>06</small><i class="t" data-i18n="nav6">Dojazd</i></span></a>
+  <a href="/blog/"><span><small>07</small><i class="t">Blog</i></span></a>
+  <div class="mobile-menu__jp">墨の香り、海の記憶</div>
+</nav>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <canvas class="hero__smoke" aria-hidden="true"></canvas>
+  <div class="hero__bgk" aria-hidden="true">墨</div>
+  <div class="hero__text">
+    <div class="hero__eyebrow label"><span class="dot"></span><i class="t" data-i18n="eyebrow">Omakase · Warszawa · od 2019</i></div>
+    <h1>
+      <span class="mask"><span style="--d:.15s" data-i18n="h1a"><span class="thin">—</span>Sztuka</span></span>
+      <span class="mask"><span style="--d:.27s" data-i18n="h1b"><em>ciszy</em></span></span>
+      <span class="mask"><span style="--d:.39s" data-i18n="h1c">na talerzu.</span></span>
+    </h1>
+    <p class="hero__lead" data-i18n="lead">Dwanaście miejsc przy ladzie z drewna hinoki. Osiemnaście dań, które powstają na Twoich oczach — z ryb sprowadzanych z Toyosu dwa razy w tygodniu.</p>
+    <div class="hero__cta">
+      <a href="#rezerwacja" class="btn btn--solid magnetic" data-hover><span data-i18n="ctaRes">Zarezerwuj miejsce</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h14M9 2l6 6-6 6"/></svg></a>
+      <a href="#karta" class="ulink" data-hover data-i18n="ctaMenu">Zobacz kartę</a>
+    </div>
+  </div>
+  <div class="hero__visual">
+    <div class="hero__img"><img class="hero-par"  alt="Nigiri z łososiem trzymane pałeczkami na czarnym tle" src="img/hero-800.webp" srcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1200.webp 1200w, img/hero-1600.webp 1600w" sizes="(max-width:900px) 92vw, 40vw" width="1600" height="2000" fetchpriority="high" decoding="async"></div>
+    <div class="hero__vert" aria-hidden="true"></div>
+    <a href="#rezerwacja" class="badge" data-hover aria-label="Rezerwacja">
+      <svg viewBox="0 0 150 150" aria-hidden="true">
+        <defs><path id="circ" d="M75,75 m-56,0 a56,56 0 1,1 112,0 a56,56 0 1,1 -112,0"/></defs>
+        <text><textPath href="#circ" data-i18n="badge">Rezerwacja ✦ Omakase ✦ Sumi ✦ 墨 ✦ </textPath></text>
+      </svg>
+      <span class="badge__core">予</span>
+    </a>
+  </div>
+  <div class="hero__foot">
+    <div class="scroll-ind"><i></i><span data-i18n="scroll">Przewiń</span></div>
+    <div class="coords">52.2250° N — 21.0216° E</div>
+    <div data-i18n="heroHours">Wt — Nd · 17:30</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__row marquee__row--a" data-dir="-1">
+    <span>Omakase <i>✦</i> Nigiri <i>✦</i> Sashimi <i>✦</i> Robata <i>✦</i> Sake <i>✦</i> Wagyu <i>✦</i></span>
+  </div>
+  <div class="marquee__row marquee__row--b" data-dir="1">
+    <span>おまかせ <i>✦</i> 握り <i>✦</i> 刺身 <i>✦</i> 炉端 <i>✦</i> 日本酒 <i>✦</i> 和牛 <i>✦</i></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="filozofia">
+  <div class="about__grid">
+    <div class="about__kanji reveal">間<small data-i18n="maSmall">Ma — przestrzeń pomiędzy</small></div>
+    <div>
+      <div class="label reveal" data-i18n="lbl1"><b>01</b> Filozofia</div>
+      <p class="words" data-words>Wierzymy, że najlepsze smaki rodzą się w *ciszy.* W precyzji noża, w temperaturze ryżu, w chwili, gdy szef podaje Ci nigiri prosto do dłoni. Bez pośpiechu. Bez nadmiaru. Tylko to, co *istotne.*</p>
+      <div class="about__body">
+        <p class="reveal" data-i18n="ab1">Sumi to po japońsku tusz — czarny, gęsty, cierpliwie ucierany na kamieniu. Tak jak kaligraf, nie poprawiamy kresek. Każde danie powstaje raz, dla Ciebie, w rytmie wieczoru.</p>
+        <p class="reveal" style="--d:.15s" data-i18n="ab2">Ryż gotujemy w żeliwie i doprawiamy czerwonym octem akazu. Ryby dojrzewamy od trzech do dziesięciu dni. Wasabi trzemy na skórze rekina — tuż przed podaniem.</p>
+      </div>
+    </div>
+    <div class="about__media">
+      <svg class="enso" viewBox="0 0 300 300" aria-hidden="true"><path d="M230 70 C 290 130, 270 240, 170 262 C 70 284, 20 200, 40 130 C 58 66, 130 30, 196 48 C 214 53, 226 60, 236 72" stroke-width="7"/></svg>
+      <div class="about__img img-reveal par-wrap"><img alt="Nigiri z łososiem i miseczka sosu sojowego na ciemnym łupku" src="img/salmon-800.webp" srcset="img/salmon-480.webp 480w, img/salmon-800.webp 800w, img/salmon-1200.webp 1200w, img/salmon-1600.webp 1600w" sizes="(max-width:600px) 92vw, (max-width:1100px) 520px, 30vw" width="1600" height="1067" loading="lazy" decoding="async"></div>
+      <div class="about__cap"><span>Sake nigiri, aburi</span><span>— 05</span></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat reveal"><div class="stat__n"><span data-count="12">0</span></div><p data-i18n="st1">miejsc przy ladzie z japońskiego cyprysu</p></div>
+    <div class="stat reveal" style="--d:.1s"><div class="stat__n"><span data-count="18">0</span></div><p data-i18n="st2">dań w wieczornym menu omakase</p></div>
+    <div class="stat reveal" style="--d:.2s"><div class="stat__n"><span data-count="72">0</span><sup>h</sup></div><p data-i18n="st3">tyle trwa przygotowanie jednego wieczoru</p></div>
+    <div class="stat reveal" style="--d:.3s"><div class="stat__n"><span data-count="2">0</span><sup>×</sup></div><p data-i18n="st4">w tygodniu dostawy z targu Toyosu w Tokio</p></div>
+  </div>
+</section>
+
+<!-- OMAKASE JOURNEY -->
+<section class="journey" id="omakase">
+  <div class="journey__sticky">
+    <div class="journey__track">
+      <div class="journey__intro">
+        <div class="label reveal" data-i18n="lbl2"><b>02</b> Omakase</div>
+        <h2 class="h2" style="margin-top:26px"><span class="mask reveal-mask"><span data-i18n="jA">Podróż</span></span><span class="mask reveal-mask"><span style="--d:.1s" data-i18n="jB">w <em>ośmiu</em></span></span><span class="mask reveal-mask"><span style="--d:.2s" data-i18n="jC">aktach.</span></span></h2>
+        <p class="reveal" style="--d:.3s" data-i18n="jP">„Omakase” znaczy „zostawiam to Tobie”. Nie wybierasz z karty — oddajesz wieczór w ręce szefa. Sezon, pogoda i poranny targ decydują o reszcie.</p>
+        <div class="journey__price reveal" style="--d:.4s" data-i18n="jPrice"><b>680 zł</b> / osoba · ok. 2,5 h</div>
+        <div class="journey__swipe" aria-hidden="true" data-i18n="jSwipe">Przesuń w bok <i>→</i></div>
+      </div>
+      <!-- courses rendered by JS -->
+      <div class="journey__end">
+        <span class="label" style="justify-content:center" data-i18n="jEndLbl">終 — Koniec</span>
+        <h2 class="h2" style="margin-top:22px" data-i18n="jEndH">Gotowy na <em>wieczór</em> bez pośpiechu?</h2>
+        <a href="#rezerwacja" class="btn btn--solid magnetic" data-hover><span data-i18n="jEndBtn">Zarezerwuj</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h14M9 2l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+    <div class="journey__hud"><b class="journey__cur">01</b><div class="journey__bar"><i></i></div><span>08</span></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="karta">
+  <div class="menu__head">
+    <div>
+      <div class="label reveal" data-i18n="lbl3"><b>03</b> Karta à la carte</div>
+      <h2 class="h2"><span class="mask reveal-mask"><span data-i18n="mA">Wybór</span></span><span class="mask reveal-mask"><span style="--d:.1s" data-i18n="mB"><em>z lady</em></span></span></h2>
+    </div>
+    <div class="tabs reveal" role="tablist">
+      <span class="tabs__pill"></span>
+      <button class="tab active" role="tab" data-cat="nigiri" data-hover>Nigiri<small>握り</small></button>
+      <button class="tab" role="tab" data-cat="sashimi" data-hover>Sashimi<small>刺身</small></button>
+      <button class="tab" role="tab" data-cat="robata" data-hover>Robata<small>炉端</small></button>
+      <button class="tab" role="tab" data-cat="sake" data-hover>Sake<small>酒</small></button>
+    </div>
+  </div>
+  <ul class="dishes"></ul>
+  <div class="menu__note reveal"><span data-i18n="note1">Ceny w PLN. Nigiri podajemy po dwa kawałki.</span><span data-i18n="note2">Menu zmienia się z porą roku — pytaj o propozycje dnia.</span></div>
+</section>
+
+<!-- CHEF -->
+<section class="chef" id="szef">
+  <div class="chef__img">
+    <div class="img-reveal par-wrap"><img alt="Szef kuchni przy płomieniu w kuchni restauracji" src="img/fire-800.webp" srcset="img/fire-480.webp 480w, img/fire-800.webp 800w, img/fire-1200.webp 1200w, img/fire-1600.webp 1600w" sizes="(max-width:900px) min(92vw, 520px), 40vw" width="1600" height="1067" loading="lazy" decoding="async"></div>
+    <div class="chef__tag">料理長</div>
+  </div>
+  <div>
+    <div class="label reveal" data-i18n="lbl4"><b>04</b> Szef kuchni</div>
+    <blockquote class="quote split" data-split>Ryż mówi prawdę. Jeśli jesteś niecierpliwy — <em>on to wie.</em></blockquote>
+    <div class="chef__sig reveal">
+      <span class="jp">森田 健</span>
+      <div data-i18n="sig"><b>Ken Morita</b>Itamae · szef kuchni i współzałożyciel</div>
+    </div>
+    <p class="chef__bio reveal" data-i18n="bio">Uczył się dziesięć lat w Ginzie, gdzie przez pierwsze trzy lata wolno mu było jedynie gotować ryż. Potem Kopenhaga, Lizbona i w końcu Warszawa — miasto, w którym, jak mówi, „ludzie wciąż potrafią słuchać jedzenia”.</p>
+    <div class="timeline reveal">
+      <div><b>2009</b><span data-i18n="tl1">Sushi Kanesaka, Tokio</span></div>
+      <div><b>2016</b><span data-i18n="tl2">Kopenhaga</span></div>
+      <div><b>2019</b><span data-i18n="tl3">Sumi, Warszawa</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="wnetrze">
+  <div class="gallery__head">
+    <div>
+      <div class="label reveal" data-i18n="lbl5"><b>05</b> Wnętrze</div>
+      <h2 class="h2"><span class="mask reveal-mask"><span data-i18n="gA">Hinoki, kamień</span></span><span class="mask reveal-mask"><span style="--d:.1s" data-i18n="gB">i <em>półmrok.</em></span></span></h2>
+    </div>
+    <p class="reveal" data-i18n="gP">Światło pada tylko tam, gdzie powinno — na ladę, ręce szefa i Twój talerz. Reszta tonie w ciepłym cieniu.</p>
+  </div>
+  <div class="ggrid">
+    <figure class="gi"><div class="img-reveal par-wrap"><img alt="Ciemne wnętrze restauracji z drewnianymi akcentami" src="img/interior-800.webp" srcset="img/interior-480.webp 480w, img/interior-800.webp 800w, img/interior-1200.webp 1200w, img/interior-1600.webp 1600w" sizes="(max-width:900px) 92vw, 56vw" width="1600" height="1067" loading="lazy" decoding="async"></div><figcaption data-i18n="cap1">Sala główna</figcaption></figure>
+    <figure class="gi"><div class="img-reveal par-wrap"><img alt="Sushi na czarnej desce z pałeczkami" src="img/slate-800.webp" srcset="img/slate-480.webp 480w, img/slate-800.webp 800w, img/slate-1200.webp 1200w, img/slate-1600.webp 1600w" sizes="(max-width:900px) 46vw, 40vw" width="1600" height="1067" loading="lazy" decoding="async"></div><figcaption>Moriawase</figcaption></figure>
+    <figure class="gi"><div class="img-reveal par-wrap"><img alt="Maki opiekane palnikiem, podnoszone pałeczkami" src="img/aburi-800.webp" srcset="img/aburi-480.webp 480w, img/aburi-800.webp 800w, img/aburi-1200.webp 1200w, img/aburi-1600.webp 1600w" sizes="(max-width:900px) 46vw, 32vw" width="1600" height="1067" loading="lazy" decoding="async"></div><figcaption>Aburi maki</figcaption></figure>
+    <figure class="gi"><div class="img-reveal par-wrap"><img alt="Stół z kieliszkami i elegancko podanym daniem" src="img/fine-800.webp" srcset="img/fine-480.webp 480w, img/fine-800.webp 800w, img/fine-1200.webp 1200w, img/fine-1600.webp 1600w" sizes="(max-width:900px) 92vw, 56vw" width="1600" height="1067" loading="lazy" decoding="async"></div><figcaption data-i18n="cap4">Kolacja przy stole</figcaption></figure>
+    <figure class="gi"><div class="img-reveal par-wrap"><img alt="Zestaw sushi z sosem sojowym na ciemnym tle" src="img/set-800.webp" srcset="img/set-480.webp 480w, img/set-800.webp 800w, img/set-1200.webp 1200w, img/set-1600.webp 1600w" sizes="(max-width:900px) 46vw, 32vw" width="1600" height="1019" loading="lazy" decoding="async"></div><figcaption data-i18n="cap5">Zestaw lunchowy</figcaption></figure>
+    <figure class="gi"><div class="img-reveal par-wrap"><img alt="Miska chirashi z sashimi i warzywami" src="img/chirashi-800.webp" srcset="img/chirashi-480.webp 480w, img/chirashi-800.webp 800w, img/chirashi-1200.webp 1200w, img/chirashi-1600.webp 1600w" sizes="(max-width:900px) 46vw, 40vw" width="1600" height="1069" loading="lazy" decoding="async"></div><figcaption>Chirashi</figcaption></figure>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section class="reserve" id="rezerwacja">
+  <div class="reserve__info">
+    <div class="label reveal" data-i18n="lbl6"><b>06</b> Rezerwacja</div>
+    <h2 class="h2"><span class="mask reveal-mask"><span data-i18n="rA">Twoje miejsce</span></span><span class="mask reveal-mask"><span style="--d:.1s" data-i18n="rB"><em>przy ladzie.</em></span></span></h2>
+    <dl class="info">
+      <div class="reveal"><dt data-i18n="dt1">Adres</dt><dd data-i18n="dd1">ul. Mokotowska 37<small>00-551 Warszawa, wejście od podwórza</small></dd></div>
+      <div class="reveal" style="--d:.08s"><dt data-i18n="dt2">Godziny</dt><dd data-i18n="dd2">Wt — Sob · 17:30 — 23:00<small>Niedziela 13:00 — 21:00 · poniedziałek nieczynne</small></dd></div>
+      <div class="reveal" style="--d:.16s"><dt data-i18n="dt3">Kontakt</dt><dd>+48 22 100 20 30<small>rezerwacje@sumi-omakase.pl</small></dd></div>
+    </dl>
+  </div>
+
+  <form class="form reveal" novalidate>
+    <h3 data-i18n="fH3">Rezerwacja <small>予約</small></h3>
+    <div class="fgrid">
+      <div class="field"><input id="f-name" name="name" placeholder=" " autocomplete="name" required><label for="f-name" data-i18n="fName">Imię i nazwisko</label><span class="msg" data-i18n="msgReq">Wymagane</span></div>
+      <div class="field"><input id="f-tel" name="tel" type="tel" placeholder=" " autocomplete="tel" required><label for="f-tel" data-i18n="fTel">Telefon</label><span class="msg" data-i18n="msgReq">Wymagane</span></div>
+      <div class="field static"><input id="f-date" name="date" type="date" required><label for="f-date" data-i18n="fDate">Data</label><span class="msg" data-i18n="msgDate">Wybierz datę</span></div>
+      <div class="field static">
+        <label for="f-type" style="position:absolute" data-i18n="fType">Miejsce</label>
+        <select id="f-type" name="type" style="appearance:none;cursor:pointer">
+          <option style="background:#1d1a16" data-i18n="opt1">Lada omakase · 680 zł</option>
+          <option style="background:#1d1a16" data-i18n="opt2">Stolik à la carte</option>
+        </select>
+      </div>
+      <div class="field full static" style="padding-top:6px">
+        <span class="sublabel" data-i18n="subTime">Godzina</span>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="time" value="17:30" checked><span>17:30</span></label>
+          <label class="chip"><input type="radio" name="time" value="19:00"><span>19:00</span></label>
+          <label class="chip chip--off"><input type="radio" name="time" value="20:00" disabled><span>20:00</span></label>
+          <label class="chip"><input type="radio" name="time" value="20:30"><span>20:30</span></label>
+          <label class="chip"><input type="radio" name="time" value="21:15"><span>21:15</span></label>
+        </div>
+      </div>
+      <div class="field full static">
+        <span class="sublabel" data-i18n="subGuests">Liczba gości</span>
+        <div class="stepper">
+          <button type="button" data-step="-1" aria-label="Mniej gości" data-hover>−</button>
+          <output id="guests">2</output>
+          <button type="button" data-step="1" aria-label="Więcej gości" data-hover>+</button>
+          <small data-i18n="stepNote">maks. 6 osób przy ladzie</small>
+        </div>
+        <div class="seats" aria-hidden="true"></div>
+      </div>
+      <div class="field full"><textarea id="f-note" name="note" placeholder=" "></textarea><label for="f-note" data-i18n="fNote">Alergie, okazja, życzenia (opcjonalnie)</label></div>
+    </div>
+    <div class="form__foot">
+      <p data-i18n="fFoot">Prosimy o informację o odwołaniu do 48 h przed wizytą. Potwierdzenie wyślemy SMS-em.</p>
+      <button type="submit" class="btn btn--solid magnetic" data-hover><span data-i18n="fSubmit">Potwierdź</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h14M9 2l6 6-6 6"/></svg></button>
+    </div>
+    <div class="success" role="status" aria-live="polite">
+      <div class="hanko">予約</div>
+      <h4 data-i18n="sH4">Do zobaczenia <em>przy ladzie.</em></h4>
+      <p class="success__txt"></p>
+      <button type="button" class="ulink success__back" data-hover data-i18n="sBack">Nowa rezerwacja</button>
+    </div>
+  </form>
+</section>
+
+<!-- DIRECTIONS -->
+<section class="visit" id="dojazd">
+  <div class="visit__head">
+    <div>
+      <div class="label reveal" data-i18n="lbl7"><b>07</b> Dojazd</div>
+      <h2 class="h2"><span class="mask reveal-mask"><span data-i18n="vA">Znajdź nas</span></span><span class="mask reveal-mask"><span style="--d:.1s" data-i18n="vB"><em>w podwórzu.</em></span></span></h2>
+    </div>
+    <p class="reveal" data-i18n="vP">Wejście od podwórza kamienicy przy Mokotowskiej 37 — szukaj czerwonej latarni z&nbsp;墨. Zadzwoń domofonem „Sumi”, otworzymy.</p>
+  </div>
+  <div class="visit__grid">
+    <div class="map-wrap reveal">
+      <div id="map" class="map" role="region" aria-label="Mapa / Map"></div>
+      <div class="map__hint">Kliknij mapę, aby przybliżać kółkiem</div>
+      <div class="map__corner">52.2250° N · 21.0216° E</div>
+    </div>
+    <div class="routes">
+      <div class="route reveal"><span class="route__ic">T</span><div><h4 data-i18n="r1h">Tramwaj</h4><p data-i18n="r1p">Przystanek <b>Plac Zbawiciela</b> — linie 4, 15, 18, 35. Stamtąd 8 minut spacerem w górę Mokotowskiej.</p></div></div>
+      <div class="route reveal" style="--d:.08s"><span class="route__ic">M</span><div><h4 data-i18n="r2h">Metro</h4><p data-i18n="r2p">Stacja <b>Politechnika</b> (M1) — ok. 12 minut pieszo.</p></div></div>
+      <div class="route reveal" style="--d:.16s"><span class="route__ic">P</span><div><h4 data-i18n="r3h">Samochód</h4><p data-i18n="r3p">Strefa płatnego parkowania na Mokotowskiej i Koszykowej. Po 20:00 i w weekendy bezpłatnie.</p></div></div>
+      <div class="routes__cta reveal" style="--d:.24s">
+        <a class="btn btn--solid magnetic" data-hover href="https://www.google.com/maps/dir/?api=1&amp;destination=52.2250,21.0216" target="_blank" rel="noopener"><span data-i18n="routeBtn">Wyznacz trasę</span>
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8h14M9 2l6 6-6 6"/></svg></a>
+        <button type="button" class="ulink copy-addr" data-hover data-i18n="copyBtn">Kopiuj adres</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div class="toast" role="status" aria-live="polite"></div>
+
+<!-- QUICK DOCK: menu, phone, booking — always one tap away -->
+<nav class="dock" aria-label="Szybkie akcje">
+  <button type="button" class="dock__btn" data-open-menu data-hover><b aria-hidden="true">品</b><span data-i18n="dockMenu">Karta</span></button>
+  <span class="dock__sep" aria-hidden="true"></span>
+  <a class="dock__btn" href="tel:+48221002030" data-hover>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 6.9 6.9l1.5-2.3L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
+    <span data-i18n="dockCall">Zadzwoń</span><span class="dock__num">22 100 20 30</span>
+  </a>
+  <a class="dock__btn dock__btn--book" href="#rezerwacja" data-hover><b aria-hidden="true">予</b><span data-i18n="dockBook">Rezerwuj</span></a>
+</nav>
+
+<!-- MENU SHEET (filled by JS in the current language) -->
+<div class="sheet" aria-hidden="true">
+  <div class="sheet__bg"></div>
+  <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <span class="sheet__grab" aria-hidden="true"></span>
+    <div class="sheet__head">
+      <h2 id="sheet-title">Karta <b>品</b></h2>
+      <button type="button" class="sheet__x" aria-label="Zamknij kartę" data-hover>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet__nav" aria-label="Kategorie"></div>
+    <div class="sheet__body" data-lenis-prevent tabindex="-1"></div>
+    <div class="sheet__foot">
+      <a class="sheet__call" href="tel:+48221002030" data-hover>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h3.5l1.8 4.6-2.3 1.5a11 11 0 0 0 6.9 6.9l1.5-2.3L21 15.5V19a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>
+        <span>Zadzwoń</span>
+      </a>
+      <button type="button" class="sheet__book" data-hover><span>Zarezerwuj</span></button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer__top">
+    <div>
+      <h5>Sumi 墨</h5>
+      <p style="max-width:300px" data-i18n="fAbout">Japońska restauracja omakase. Dwanaście miejsc, jeden szef, wieczór bez pośpiechu.</p>
+    </div>
+    <div><h5 data-i18n="fH1">Odwiedź</h5><p data-i18n="fAddr">ul. Mokotowska 37<br>00-551 Warszawa</p><a href="#dojazd" data-hover data-i18n="fHow">Jak dojechać →</a></div>
+    <div><h5 data-i18n="fH2">Godziny</h5><p data-i18n="fHours">Wt — Sob 17:30 — 23:00<br>Nd 13:00 — 21:00</p></div>
+    <div><h5 data-i18n="fH3">Obserwuj</h5><a href="#" data-hover>Instagram ↗</a><a href="#" data-hover>Facebook ↗</a><a href="https://www.google.com/maps/dir/?api=1&amp;destination=52.2250,21.0216" target="_blank" rel="noopener" data-hover>Google Maps ↗</a></div>
+  </div>
+  <div class="footer__big drop" aria-hidden="true"><div><span class="fl" style="--i:0;--r:-18deg"><span>S</span></span><span class="fl" style="--i:1;--r:12deg"><span>U</span></span><span class="fl" style="--i:2;--r:-9deg"><span>M</span></span><span class="fl" style="--i:3;--r:22deg"><span>I</span></span></div><span class="k"></span></div>
+  <div class="footer__bottom">
+    <span data-i18n="copy">© 2026 Sumi — fikcyjna restauracja, projekt portfolio</span>
+    <span data-i18n="photos">Zdjęcia: Unsplash</span>
+    <a href="#top" class="totop" data-hover data-i18n="toTop">Do góry <i>↑</i></a>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  // local WebP photos: id -> [file name, available widths, width, height]  (generated by npm run images)
+  const PHOTOS = {"1615361200141-f45040f367be":["hero",[480,800,1200,1600],1600,2000],"1583623025817-d180a2221d0a":["salmon",[480,800,1200,1600],1600,1067],"1600565193348-f74bd3c7ccdf":["fire",[480,800,1200,1600],1600,1067],"1517248135467-4c7edcad34c4":["interior",[480,800,1200,1600],1600,1067],"1617196034796-73dfa7b1fd56":["slate",[480,800,1200,1600],1600,1067],"1617196035154-1e7e6e28b0db":["aburi",[480,800,1200,1600],1600,1067],"1414235077428-338989a2e8c0":["fine",[480,800,1200,1600],1600,1067],"1607301406259-dfb186e15de8":["set",[480,800,1200,1600],1600,1019],"1534482421-64566f976cfa":["chirashi",[480,800,1200,1600],1600,1069],"1617196034183-421b4917c92d":["rolls",[480,800,1200,1600],1600,1045],"1514190051997-0f6f39ca5cde":["row",[480,800,1200,1600],1600,1067],"1580822184713-fc5400e7fe10":["ikura",[480,800,1200,1600],1600,2400],"1582450871972-ab5ca641643d":["macro",[480,800,1200,1600],1600,2400],"1562802378-063ec186a863":["platter",[480,800,1200,1600],1600,2400],"1611143669185-af224c5e3252":["table",[480,800,1200,1600],1600,899],"1564489563601-c53cfc451e93":["maki",[480,800,1200,1600],1600,2400]};
+  const img = (id, w = 900) => { const p = PHOTOS[id]; return `img/${p[0]}-${p[1].find(x => x >= w) || p[1][p[1].length - 1]}.webp`; };
+  const imgSet = id => PHOTOS[id][1].map(w => `img/${PHOTOS[id][0]}-${w}.webp ${w}w`).join(', ');
+  const imgDims = id => `width="${PHOTOS[id][2]}" height="${PHOTOS[id][3]}"`;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+
+  /* ---------- data ---------- */
+  const IMG = {
+    chirashi:'1534482421-64566f976cfa', set:'1607301406259-dfb186e15de8', slate:'1617196034796-73dfa7b1fd56',
+    fire:'1600565193348-f74bd3c7ccdf', salmon:'1583623025817-d180a2221d0a', hero:'1615361200141-f45040f367be',
+    rolls:'1617196034183-421b4917c92d', aburi:'1617196035154-1e7e6e28b0db', row:'1514190051997-0f6f39ca5cde',
+    ikura:'1580822184713-fc5400e7fe10', macro:'1582450871972-ab5ca641643d', platter:'1562802378-063ec186a863',
+    table:'1611143669185-af224c5e3252', fine:'1414235077428-338989a2e8c0', maki:'1564489563601-c53cfc451e93'
+  };
+
+  const courses = [
+    ['一','Sakizuke','先付','Sezonowa przystawka — chirashi z ikurą, shiso i yuzu.', IMG.chirashi],
+    ['二','Owan','御椀','Klarowny bulion dashi z kombu z Rishiri i płatkami bonito.', IMG.set],
+    ['三','Otsukuri','御造り','Sashimi dnia, krojone na oczach gości.', IMG.slate],
+    ['四','Yakimono','焼物','Z ognia robaty — węgiel binchōtan i sól morska.', IMG.fire],
+    ['五','Nigiri I','握り','Ryby białe i srebrne. Kohada, madai, shima-aji.', IMG.salmon],
+    ['六','Nigiri II','握り','Akami, chūtoro, otoro — tuńczyk w trzech odsłonach.', IMG.hero],
+    ['七','Maki','巻物','Temaki podawane prosto z dłoni szefa.', IMG.rolls],
+    ['八','Mizugashi','水菓子','Na koniec — owoc sezonu i herbata hōjicha.', IMG.aburi]
+  ];
+
+  const menu = {
+    nigiri:[
+      ['Akami','赤身','Chudy tuńczyk błękitnopłetwy, marynowany w nikiri.','38', IMG.hero],
+      ['Otoro','大トロ','Najtłustszy brzuch tuńczyka, muśnięty ogniem.','64', IMG.row],
+      ['Hotate','帆立','Przegrzebek z Hokkaido, yuzu, sól z Okinawy.','42', IMG.table],
+      ['Sake Aburi','鮭','Łosoś opalany palnikiem, białe miso.','32', IMG.salmon],
+      ['Unagi','鰻','Węgorz glazurowany sosem tare, pieprz sansho.','44', IMG.macro],
+      ['Ikura','いくら','Ikra łososia w sake i sosie sojowym.','46', IMG.ikura]
+    ],
+    sashimi:[
+      ['Moriawase','盛り合わせ','Wybór szefa — dwanaście plastrów dnia.','128', IMG.slate],
+      ['Hamachi','鰤','Seriola, ponzu, zielone chili i kolendra.','56', IMG.platter],
+      ['Madai','真鯛','Dorada japońska, dojrzewana w kombu.','52', IMG.set],
+      ['Chirashi','ちらし','Miska ryżu sushi z sashimi i ikurą.','74', IMG.chirashi]
+    ],
+    robata:[
+      ['Wagyu A5','和牛','80 g z Kagoshimy, binchōtan, sól wasabi.','189', IMG.fire],
+      ['Gindara','銀鱈','Czarny dorsz marynowany 48 h w saikyo miso.','96', IMG.fine],
+      ['Tsukune','つくね','Szaszłyk z mielonego kurczaka, żółtko, tare.','34', IMG.aburi],
+      ['Aburi Maki','炙り巻','Rolka opalana palnikiem, majonez z yuzu.','48', IMG.rolls]
+    ],
+    sake:[
+      ['Dassai 23','獺祭','Junmai Daiginjo · Yamaguchi. Gruszka, melon, jedwab.','92', IMG.fine, '100 ml'],
+      ['Kubota Manju','久保田','Junmai Daiginjo · Niigata. Czyste, chłodne, długie.','78', IMG.table, '100 ml'],
+      ['Hakkaisan','八海山','Tokubetsu Honjozo · Niigata. Wytrawne i rześkie.','46', IMG.set, '100 ml'],
+      ['Nigori','濁り','Niefiltrowane, kremowe, z nutą ryżu i kokosa.','39', IMG.maki, '100 ml']
+    ]
+  };
+
+  /* ---------- build journey ---------- */
+  const track = $('.journey__track'), endPanel = $('.journey__end');
+  courses.forEach(([n, name, jp, desc, id], i) => {
+    const el = document.createElement('article');
+    el.className = 'course';
+    el.innerHTML = `<span class="course__num">${n}</span>
+      <div class="course__img"><img src="${img(id, 800)}" srcset="${imgSet(id)}" sizes="(max-width:900px) 76vw, 28vw" ${imgDims(id)} alt="${name}" loading="lazy" decoding="async"></div>
+      <div class="course__meta"><h3>${name}<small>${jp}</small></h3><span class="course__idx">0${i + 1} / 08</span></div>
+      <p>${desc}</p>`;
+    el.dataset.cursor = 'Smak';
+    track.insertBefore(el, endPanel);
+  });
+
+  /* ---------- hero vertical text ---------- */
+  $('.hero__vert').innerHTML = [...'墨の香り、海の記憶'].map((c, i) => `<span style="--i:${i}">${c}</span>`).join('');
+
+  /* ---------- word split ---------- */
+  $$('[data-words]').forEach(p => {
+    const html = p.textContent.trim().split(/\s+/).map(w => {
+      const hl = w.startsWith('*');
+      w = w.replace(/\*/g, '');
+      return `<span class="w${hl ? ' hl' : ''}">${w}</span>`;
+    }).join(' ');
+    p.innerHTML = html;
+  });
+
+  /* ---------- char split ---------- */
+  $$('[data-split]').forEach(el => {
+    let i = 0;
+    const walk = node => {
+      [...node.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const word = document.createElement('span');
+            word.style.display = 'inline-block';
+            word.style.whiteSpace = 'nowrap';
+            [...part].forEach(c => {
+              const s = document.createElement('span');
+              s.className = 'ch'; s.style.setProperty('--i', i++); s.textContent = c;
+              word.appendChild(s);
+            });
+            frag.appendChild(word);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    walk(el);
+  });
+
+  /* ---------- seats ---------- */
+  const seats = $('.seats');
+  seats.innerHTML = '<i></i>'.repeat(6);
+
+  /* ---------- menu render ---------- */
+  const list = $('.dishes');
+  const renderMenu = (cat, animate = true) => {
+    list.innerHTML = menu[cat].map(([name, jp, desc, price, id, unit], i) =>
+      `<li class="dish${animate ? ' enter' : ''}" data-img="${img(id, 600)}" data-cursor="${lang === 'en' ? 'View' : 'Zobacz'}">
+        <span class="dish__i">0${i + 1}</span>
+        <span class="dish__name">${name}<small>${jp}</small></span>
+        <span class="dish__desc">${lang === 'en' && MENU_EN[name] || desc}</span>
+        <span class="dish__price">${price} ${lang === 'en' ? 'PLN' : 'zł'}${unit ? `<small>/ ${unit}</small>` : ''}</span>
+      </li>`).join('');
+    const items = $$('.dish', list);
+    if (animate) items.forEach((li, i) => {
+      [...li.children].forEach((c, j) => c.style.transitionDelay = `${i * 70 + j * 40}ms`);
+      requestAnimationFrame(() => requestAnimationFrame(() => li.classList.remove('enter')));
+      setTimeout(() => [...li.children].forEach(c => c.style.transitionDelay = ''), 1400);
+    });
+    bindHover(list);
+    bindPreview();
+  };
+
+  const tabs = $$('.tab'), pill = $('.tabs__pill');
+  const movePill = t => { pill.style.width = t.offsetWidth + 'px'; pill.style.transform = `translateX(${t.offsetLeft}px)`; };
+  tabs.forEach(t => t.addEventListener('click', () => {
+    if (t.classList.contains('active')) return;
+    tabs.forEach(x => { x.classList.remove('active'); x.setAttribute('aria-selected', 'false'); });
+    t.classList.add('active'); t.setAttribute('aria-selected', 'true');
+    movePill(t);
+    $$('.dish', list).forEach((li, i) => { li.style.transition = `opacity .35s ${i * 30}ms, transform .5s ${i * 30}ms var(--ease)`; li.style.opacity = 0; li.style.transform = 'translateY(-14px)'; });
+    setTimeout(() => renderMenu(t.dataset.cat), 380);
+  }));
+
+  /* ---------- menu preview ---------- */
+  const preview = $('.preview'), pImg = $('img', preview);
+  let px = innerWidth / 2, py = innerHeight / 2, ppx = px, ppy = py, pRot = 0;
+  function bindPreview() {
+    if (!finePointer) return;
+    $$('.dish', list).forEach(li => {
+      li.addEventListener('mouseenter', () => {
+        if (pImg.getAttribute('src') !== li.dataset.img) {
+          pImg.style.opacity = 0;
+          const n = new Image(); n.src = li.dataset.img;
+          n.onload = () => { pImg.src = li.dataset.img; pImg.style.opacity = 1; };
+        }
+        preview.classList.add('on');
+      });
+      li.addEventListener('mouseleave', () => preview.classList.remove('on'));
+    });
+  }
+
+  /* ---------- cursor ---------- */
+  const cursor = $('.cursor'), dot = $('.cursor-dot'), cLabel = $('span', cursor);
+  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; px = mx; py = my; }, { passive: true });
+  function bindHover(root = document) {
+    $$('[data-hover], [data-cursor]', root).forEach(el => {
+      if (el._hb) return; el._hb = 1;
+      el.addEventListener('mouseenter', () => {
+        if (el.dataset.cursor) { cLabel.textContent = el.dataset.cursor; cursor.classList.add('is-label'); }
+        else cursor.classList.add('is-hover');
+      });
+      el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover', 'is-label'));
+    });
+  }
+
+  /* ---------- magnetic ---------- */
+  if (finePointer) $$('.magnetic').forEach(el => {
+    el.style.transition += ', transform .8s var(--ease)';
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+      el.style.transform = `translate(${x * .28}px, ${y * .4}px)`;
+    });
+    el.addEventListener('mouseleave', () => el.style.transform = '');
+  });
+
+  /* ---------- reveal observer ---------- */
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const t = e.target._reveal || e.target;
+    t.classList.add('in');
+    if (t.dataset.count !== undefined) countUp(t);
+    io.unobserve(e.target);
+  }), { threshold: .18, rootMargin: '0px 0px -6% 0px' });
+  // clip-path-hidden elements never report as intersecting, so watch their parent instead
+  const observeAll = () => $$('.reveal, .reveal-mask, .label, .img-reveal, .split, .enso, .drop, [data-count]').forEach(el => {
+    if (el.classList.contains('img-reveal')) { const p = el.parentElement; p._reveal = el; io.observe(p); }
+    else io.observe(el);
+  });
+
+  function countUp(el) {
+    const end = +el.dataset.count, t0 = performance.now(), dur = 1800;
+    const step = t => {
+      const p = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - p, 4);
+      el.textContent = Math.round(end * e);
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- smooth scroll ---------- */
+  let lenis = null;
+  if (window.Lenis && !reduced) {
+    lenis = new Lenis({ lerp: .085, smoothWheel: true, wheelMultiplier: 1 });
+    lenis.stop();
+  }
+  const goTo = target => {
+    const el = target === '#top' ? document.body : $(target);
+    if (!el) return;
+    if (lenis) lenis.scrollTo(el, { offset: 0, duration: 1.8, easing: t => 1 - Math.pow(1 - t, 4) });
+    else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  };
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const h = a.getAttribute('href');
+    if (h.length < 2) { e.preventDefault(); return; }
+    e.preventDefault();
+    document.body.classList.remove('menu-open');
+    $('.burger').setAttribute('aria-expanded', 'false');
+    lenis && lenis.start();
+    inkTo(h, e.clientX || innerWidth / 2, e.clientY || innerHeight / 2);
+  }));
+
+  /* ---------- mobile menu ---------- */
+  $('.burger').addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    $('.burger').setAttribute('aria-expanded', open);
+    $$('.mobile-menu a span').forEach((s, i) => s.style.transitionDelay = open ? `${.25 + i * .07}s` : '0s');
+    if (lenis) open ? lenis.stop() : lenis.start();
+  });
+
+  /* ---------- scroll-driven loop ---------- */
+  const nav = $('.nav'), prog = $('.progress');
+  const heroImg = $('.hero-par'), heroBgk = $('.hero__bgk');
+  const words = $$('[data-words]');
+  const parWraps = $$('.par-wrap');
+  const journey = $('.journey'), jBar = $('.journey__bar i'), jCur = $('.journey__cur');
+  const rows = $$('.marquee__row').map(r => {
+    r.innerHTML = r.innerHTML.repeat(4);
+    return { el: r, x: 0, dir: +r.dataset.dir, w: 0 };
+  });
+  let lastY = scrollY, vel = 0, jMax = 0, isDesktopJ = false, vh = innerHeight;
+
+  function layout() {
+    vh = innerHeight;
+    isDesktopJ = innerWidth > 900;
+    rows.forEach(r => r.w = r.el.scrollWidth / 4);
+    if (isDesktopJ) {
+      jMax = track.scrollWidth - innerWidth;
+      journey.style.height = (jMax + vh) + 'px';
+    } else { journey.style.height = ''; track.style.transform = ''; }
+    const active = $('.tab.active'); active && movePill(active);
+  }
+
+  function tick() {
+    const y = scrollY;
+    vel = lerp(vel, y - lastY, .12);
+    const docH = document.documentElement.scrollHeight - vh;
+    prog.style.transform = `scaleX(${docH > 0 ? y / docH : 0})`;
+
+    if (!document.body.classList.contains('menu-open')) {
+      nav.classList.toggle('is-scrolled', y > 40);
+      if (y - lastY > 4 && y > 300) nav.classList.add('is-hidden');
+      else if (lastY - y > 4 || y < 300) nav.classList.remove('is-hidden');
+    }
+    lastY = y;
+
+    if (y < vh * 1.2) {
+      heroImg.style.transform = `translateY(${y * -.12}px)`;
+      heroBgk.style.transform = `translateY(calc(-50% + ${y * .3}px))`;
+    }
+
+    // marquee with scroll velocity
+    rows.forEach(r => {
+      const speed = (reduced ? 0 : .6) + Math.abs(vel) * .35;
+      r.x += speed * r.dir * (vel < 0 ? -1 : 1);
+      if (r.w) { if (r.x <= -r.w) r.x += r.w; if (r.x > 0) r.x -= r.w; }
+      r.el.style.transform = `translate3d(${r.x}px,0,0) skewX(${clamp(-vel * .25, -8, 8)}deg)`;
+    });
+
+    // word highlight
+    words.forEach(p => {
+      const r = p.getBoundingClientRect();
+      const prog = clamp((vh * .85 - r.top) / (r.height + vh * .35), 0, 1);
+      const ws = p.children, n = ws.length;
+      for (let i = 0; i < n; i++) ws[i].style.opacity = clamp(prog * n * 1.15 - i, .14, 1);
+    });
+
+    // image parallax
+    parWraps.forEach(w => {
+      const r = w.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      const c = (r.top + r.height / 2 - vh / 2) / vh;
+      const im = w.firstElementChild;
+      if (w.classList.contains('in')) im.style.transform = `translateY(${c * -7}%) scale(1.14)`;
+    });
+
+    // horizontal journey
+    if (isDesktopJ) {
+      const r = journey.getBoundingClientRect();
+      const p = clamp(-r.top / (journey.offsetHeight - vh), 0, 1);
+      track.style.transform = `translate3d(${-p * jMax}px,0,0)`;
+      jBar.style.transform = `scaleX(${p})`;
+      jCur.textContent = String(clamp(Math.ceil(p * 9) || 1, 1, 8)).padStart(2, '0');
+    }
+
+    // v2 effects
+    drawSmoke();
+
+    // cursor
+    cx = lerp(cx, mx, .16); cy = lerp(cy, my, .16);
+    cursor.style.transform = `translate(${cx}px,${cy}px)`;
+    dot.style.transform = `translate(${mx}px,${my}px)`;
+
+    // preview
+    const nx = lerp(ppx, px, .1), ny = lerp(ppy, py, .1);
+    pRot = lerp(pRot, clamp((px - ppx) * .25, -12, 12), .1);
+    ppx = nx; ppy = ny;
+    preview.style.transform = `translate(${nx - 130}px,${ny - 165}px) rotate(${pRot}deg)`;
+  }
+
+  function raf(t) { lenis && lenis.raf(t); tick(); requestAnimationFrame(raf); }
+
+  /* ---------- reservation form ---------- */
+  const form = $('.form'), out = $('#guests');
+  let guests = 2;
+  const setSeats = () => $$('i', seats).forEach((s, i) => s.classList.toggle('on', i < guests));
+  setSeats();
+  $$('[data-step]').forEach(b => b.addEventListener('click', () => {
+    const n = clamp(guests + +b.dataset.step, 1, 6);
+    if (n === guests) return;
+    guests = n; out.textContent = n; out.classList.remove('bump'); void out.offsetWidth; out.classList.add('bump'); setSeats();
+  }));
+  const dateIn = $('#f-date');
+  const today = new Date(); today.setDate(today.getDate() + 1);
+  dateIn.min = today.toISOString().slice(0, 10);
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let ok = true;
+    ['#f-name', '#f-tel', '#f-date'].forEach(s => {
+      const f = $(s), bad = !f.value.trim();
+      f.parentElement.classList.toggle('err', bad);
+      if (bad) ok = false;
+    });
+    if (!ok) return;
+    const d = new Date(dateIn.value + 'T12:00');
+    $('.success__txt').textContent = successText(d, $('input[name="time"]:checked').value);
+    $('.success').classList.add('on');
+  });
+  $$('.field input').forEach(i => i.addEventListener('input', () => i.parentElement.classList.remove('err')));
+  $('.success__back').addEventListener('click', () => { form.reset(); guests = 2; out.textContent = 2; setSeats(); $('.success').classList.remove('on'); });
+
+  /* =========================================================
+     v2 · 1) ink transition between sections
+     ========================================================= */
+  const ink = $('.ink'), inkLbl = $('.ink__label'), inkShu = $('#ink-shu'), inkDark = $('#ink-dark');
+  const SECT = {
+    '#top': ['墨', 'Sumi', '00'], '#filozofia': ['間', 'Filozofia', '01'], '#omakase': ['任', 'Omakase', '02'],
+    '#karta': ['品', 'Karta', '03'], '#szef': ['匠', 'Szef kuchni', '04'], '#wnetrze': ['室', 'Wnętrze', '05'],
+    '#rezerwacja': ['予', 'Rezerwacja', '06'], '#dojazd': ['道', 'Dojazd', '07']
+  };
+  let inkBusy = false;
+  function jump(hash) {
+    const el = hash === '#top' ? 0 : $(hash);
+    if (lenis) lenis.scrollTo(el, { immediate: true, force: true });
+    else if (el === 0) scrollTo(0, 0); else el.scrollIntoView();
+  }
+  function inkTo(hash, x, y, opts) {
+    if (!opts && !$(hash) && hash !== '#top') return;
+    if (reduced) return opts ? opts.onCover() : goTo(hash);
+    if (inkBusy) return;
+    inkBusy = true;
+    const W = innerWidth, H = innerHeight;
+    ink.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const R = Math.hypot(Math.max(x, W - x), Math.max(y, H - y)) * 1.4;
+    const drops = Array.from({ length: 7 }, () => {
+      const a = Math.random() * Math.PI * 2, d = 70 + Math.random() * 280;
+      return `<circle cx="${x + Math.cos(a) * d}" cy="${y + Math.sin(a) * d}" r="0" data-s="${12 + Math.random() * 46}"/>`;
+    }).join('');
+    inkShu.innerHTML = `<circle cx="${x}" cy="${y}" r="0"/>${drops}`;
+    inkDark.innerHTML = `<circle cx="${x}" cy="${y}" r="0"/>`;
+    $('#ink-turb').setAttribute('seed', (Math.random() * 999) | 0);
+    const [k, name, num] = opts ? opts.label : (lang === 'en' ? SECT_EN : SECT)[hash] || ['墨', '', ''];
+    inkLbl.innerHTML = `<div><small>${num}</small><b>${k}</b><span>${name}</span></div>`;
+    ink.style.transition = ''; ink.style.opacity = 1; ink.classList.add('on');
+    const shu = [...inkShu.children], dark = inkDark.firstChild, t0 = performance.now();
+    const out = p => 1 - Math.pow(1 - p, 3);
+    const grow = t => {
+      const p1 = clamp((t - t0) / 700, 0, 1), p2 = clamp((t - t0 - 160) / 720, 0, 1);
+      shu.forEach((c, i) => c.setAttribute('r', i ? c.dataset.s * out(clamp(p1 * 3, 0, 1)) : R * out(p1)));
+      dark.setAttribute('r', R * out(p2));
+      if (p2 > .6) inkLbl.classList.add('on');
+      if (p2 < 1) return requestAnimationFrame(grow);
+      opts ? opts.onCover() : jump(hash);
+      setTimeout(() => {
+        inkLbl.classList.remove('on');
+        ink.style.transition = 'opacity .8s cubic-bezier(.16,1,.3,1)';
+        ink.style.opacity = 0;
+        setTimeout(() => { ink.classList.remove('on'); inkBusy = false; }, 820);
+      }, 420);
+    };
+    requestAnimationFrame(grow);
+  }
+
+  /* =========================================================
+     v2 · 2) smoke / ink trail behind the hero
+     ========================================================= */
+  const heroEl = $('.hero'), smoke = $('.hero__smoke'), sctx = smoke.getContext('2d');
+  const sprite = (r, g, b) => {
+    const c = document.createElement('canvas'); c.width = c.height = 128;
+    const x = c.getContext('2d'), gr = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, `rgba(${r},${g},${b},1)`); gr.addColorStop(.35, `rgba(${r},${g},${b},.4)`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    x.fillStyle = gr; x.fillRect(0, 0, 128, 128); return c;
+  };
+  const SPR = [sprite(236, 228, 214), sprite(201, 68, 46)];
+  const parts = [];
+  let sW = 0, sH = 0, sDpr = 1, lpx = null, lpy = null;
+  function sizeSmoke() {
+    sDpr = Math.min(devicePixelRatio || 1, 1.5);
+    sW = heroEl.offsetWidth; sH = heroEl.offsetHeight;
+    smoke.width = sW * sDpr; smoke.height = sH * sDpr;
+  }
+  function puff(x, y, vx, vy, big) {
+    if (parts.length > 240) parts.shift();
+    parts.push({
+      x, y, vx: vx * .1 + (Math.random() - .5) * .5, vy: vy * .1 - .2 - Math.random() * .4,
+      r: big ? 60 + Math.random() * 40 : 10 + Math.random() * 16, gr: big ? .35 : .45 + Math.random() * .8,
+      a: big ? .035 : .07 + Math.random() * .06, life: 0, max: big ? 320 : 110 + Math.random() * 100,
+      c: !big && Math.random() < .16 ? 1 : 0
+    });
+  }
+  heroEl.addEventListener('pointermove', e => {
+    const r = heroEl.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if (lpx !== null) {
+      const dx = x - lpx, dy = y - lpy, n = Math.min(5, 1 + (Math.hypot(dx, dy) / 16 | 0));
+      for (let i = 0; i < n; i++) puff(lpx + dx * i / n, lpy + dy * i / n, dx, dy);
+    }
+    lpx = x; lpy = y;
+  });
+  heroEl.addEventListener('pointerleave', () => lpx = null);
+  function drawSmoke() {
+    if (reduced || scrollY > innerHeight * 1.3) return;
+    if (Math.random() < .05) puff(Math.random() * sW, sH * (.75 + Math.random() * .3), 0, -2, true);
+    sctx.setTransform(sDpr, 0, 0, sDpr, 0, 0);
+    sctx.globalCompositeOperation = 'source-over';
+    sctx.clearRect(0, 0, sW, sH);
+    sctx.globalCompositeOperation = 'lighter';
+    for (let i = parts.length - 1; i >= 0; i--) {
+      const p = parts[i];
+      if (++p.life > p.max) { parts.splice(i, 1); continue; }
+      p.vx = p.vx * .985 + Math.sin((p.y + p.life * 2) * .015) * .025;
+      p.vy = p.vy * .985 - .01;
+      p.x += p.vx; p.y += p.vy; p.r += p.gr;
+      const k = p.life / p.max;
+      sctx.globalAlpha = p.a * (k < .12 ? k / .12 : 1 - (k - .12) / .88);
+      sctx.drawImage(SPR[p.c], p.x - p.r, p.y - p.r, p.r * 2, p.r * 2);
+    }
+    sctx.globalAlpha = 1;
+  }
+
+  /* =========================================================
+     v2 · 3+4) calligraphy 墨 (KanjiVG stroke order) + falling letters
+     ========================================================= */
+  const KANJI = ['M27.61,14.13c0.41,0.41,0.92,1.58,1.15,2.09c1.53,3.46,2.64,10.9,3.62,17.8c0.21,1.48,0.42,2.93,0.62,4.31',
+    'M29.87,15.79c13.42-1.47,34.16-3.02,45.52-3.76c4.17-0.27,6.52,0.51,5.48,5.15c-0.85,3.8-2.39,9.71-4.18,14.89c-0.54,1.58-1.09,3.07-1.61,4.39',
+    'M32.32,26.76c10.31-1.13,35.06-3.26,45.56-3.63', 'M33.97,36.76c10.78-0.88,27.81-2.52,40.87-3.19',
+    'M52.77,16.19c0.89,0.89,1.35,2.19,1.35,3.48c0,9.08-0.11,31.68-0.11,34.72',
+    'M34.88,45.31c2.08,0.62,4.24,0.49,6.37,0.37c7.32-0.41,17.01-1.64,25.88-2.21c2.12-0.14,4.21-0.34,6.31,0.04',
+    'M26.13,56.71c2.71,0.86,5.74,0.41,8.49,0.24c12.57-0.81,26.02-2.27,43-2.43c2.43-0.02,4.85,0.2,7.25,0.66',
+    'M23.06,65.49c-1.14,4.87-6.59,10.54-8.06,11.76', 'M38.02,63.69c2.14,1.4,4.35,4.68,5.2,7.68',
+    'M61.25,61.4c2.65,1.49,5,5.1,6,7.93', 'M83.46,61.32c4,2.13,9.85,8.78,10.85,12.11',
+    'M33.19,81.83c1.93,0.75,4.81,0.43,6.8,0.24c9.46-0.9,21.3-1.96,30.88-2.39c2.34-0.11,4.73-0.36,7.03,0.19',
+    'M53.14,68.77c0.79,0.79,1.07,2.23,1.07,3.75c0,10.62-0.07,7.66-0.07,21.7',
+    'M20.24,96.64c2.77,0.99,6.13,0.93,9.01,0.66c15.72-1.49,37.08-2.69,51.25-3.34c3.26-0.15,6.36,0.08,9.52,0.75'];
+  function makeKanji(host) {
+    const paths = KANJI.map(d => `<path d="${d}"/>`).join('');
+    host.innerHTML = `<svg class="kanji-draw" viewBox="0 0 109 109" aria-hidden="true"><g class="ghost">${paths}</g><g class="strokes" filter="url(#brush)">${paths}</g></svg>`;
+    const strokes = $$('.strokes path', host).map(p => ({ p, len: p.getTotalLength() + 1 }));
+    // short strokes (dots) get a minimum share so the brush rhythm feels natural
+    const w = strokes.map(s => Math.max(s.len, 22)), total = w.reduce((a, b) => a + b, 0);
+    let acc = 0;
+    strokes.forEach((s, i) => {
+      s.from = acc / total; acc += w[i]; s.to = acc / total;
+      s.p.style.strokeDasharray = s.len; s.p.style.strokeDashoffset = s.len;
+    });
+    return strokes;
+  }
+  function drawKanji(strokes, e) {
+    strokes.forEach(s => {
+      const k = clamp((e - s.from) / (s.to - s.from), 0, 1);
+      s.p.style.strokeDashoffset = s.len * (1 - (1 - Math.pow(1 - k, 2)));
+    });
+  }
+  const loaderKanji = makeKanji($('.loader__kanji'));
+  const footKanji = makeKanji($('.footer__big .k'));
+  const footBig = $('.footer__big');
+  new MutationObserver((_, mo) => {
+    if (!footBig.classList.contains('in')) return;
+    mo.disconnect();
+    const t0 = performance.now() + 700, dur = reduced ? 1 : 2200;
+    const step = t => { drawKanji(footKanji, clamp((t - t0) / dur, 0, 1)); if (t < t0 + dur) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }).observe(footBig, { attributes: true, attributeFilter: ['class'] });
+
+  /* =========================================================
+     v2 · map with directions (Leaflet + darkened OpenStreetMap)
+     ========================================================= */
+  const MAP_C = [52.2250, 21.0216];
+  const TIP = {
+    pl: '<b>SUMI</b> 墨<small>Mokotowska 37 · wejście od podwórza</small>',
+    en: '<b>SUMI</b> 墨<small>Mokotowska 37 · courtyard entrance</small>'
+  };
+  const HINT = {
+    pl: finePointer ? 'Kliknij mapę, aby przybliżać kółkiem' : 'Uszczypnij, aby przybliżyć',
+    en: finePointer ? 'Click the map to zoom with the wheel' : 'Pinch to zoom'
+  };
+  let map = null, pin = null;
+  function initMap() {
+    if (map || !window.L) return;
+    const el = $('#map');
+    map = L.map(el, {
+      center: MAP_C, zoom: 13, zoomControl: false, scrollWheelZoom: false,
+      dragging: finePointer, tap: false, attributionControl: true
+    });
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+    // OpenStreetMap tiles, darkened and warmed with a CSS filter (no API key needed)
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    // walking route from the tram stop at Plac Zbawiciela
+    const route = [[52.21975, 21.01745], [52.22015, 21.01845], [52.2225, 21.0201], MAP_C];
+    L.polyline(route, { color: '#c9442e', weight: 2.5, opacity: .95, dashArray: '2 10', lineCap: 'round', className: 'route-line' }).addTo(map);
+    L.marker(route[0], {
+      icon: L.divIcon({ className: '', html: '<div class="stop-pin">T</div>', iconSize: [26, 26], iconAnchor: [13, 13] }),
+      keyboard: false
+    }).addTo(map);
+    pin = L.marker(MAP_C, {
+      icon: L.divIcon({ className: '', html: '<div class="pin"><i></i><i></i><span>墨</span></div>', iconSize: [54, 54], iconAnchor: [27, 27] })
+    }).addTo(map).bindTooltip(TIP[lang], innerWidth < 700 ? { permanent: true, direction: 'top', offset: [0, -30], className: 'pin-tip' } : { permanent: true, direction: 'right', offset: [26, 0], className: 'pin-tip' });
+
+    const hint = $('.map__hint');
+    map.on('click', () => {
+      map.scrollWheelZoom.enable();
+      el.setAttribute('data-lenis-prevent', '');
+      hint.classList.add('off');
+    });
+    $('.map-wrap').addEventListener('mouseleave', () => {
+      map.scrollWheelZoom.disable();
+      el.removeAttribute('data-lenis-prevent');
+    });
+  }
+  // Leaflet (≈40 KB) is fetched only when the visitor gets close to the map, not on page load.
+  // Its CSS goes *before* our <style> so our dark overrides still win.
+  let leafletReady = null;
+  const loadLeaflet = () => leafletReady ||= new Promise((resolve, reject) => {
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+    document.head.insertBefore(css, document.querySelector('style'));
+    const js = document.createElement('script');
+    js.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    js.onload = resolve;
+    js.onerror = reject;
+    document.head.appendChild(js);
+  });
+  const mapPreload = new IntersectionObserver(es => {
+    if (es[0].isIntersecting) { mapPreload.disconnect(); loadLeaflet().catch(() => {}); }
+  }, { rootMargin: '900px 0px' });
+  mapPreload.observe($('.map-wrap'));
+
+  const mapIO = new IntersectionObserver(es => {
+    if (!es[0].isIntersecting) return;
+    mapIO.disconnect();
+    loadLeaflet().then(() => {
+      initMap();
+      if (map) setTimeout(() => map.flyTo(MAP_C, 16, { duration: reduced ? 0 : 2.6 }), 350);
+    }).catch(() => { $('.map__hint').textContent = lang === 'en' ? 'Map unavailable' : 'Mapa niedostępna'; });
+  }, { threshold: .25 });
+  mapIO.observe($('.map-wrap'));
+
+  const toast = $('.toast');
+  let toastT;
+  $('.copy-addr').addEventListener('click', () => {
+    const addr = 'ul. Mokotowska 37, 00-551 Warszawa';
+    const show = msg => {
+      toast.textContent = msg; toast.classList.add('on');
+      clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove('on'), 2400);
+    };
+    const ok = () => show(lang === 'en' ? 'Address copied' : 'Skopiowano adres');
+    const fail = () => show(addr);
+    navigator.clipboard ? navigator.clipboard.writeText(addr).then(ok, fail) : fail();
+  });
+
+  /* =========================================================
+     v2 · PL / EN
+     ========================================================= */
+  let lang = 'pl';
+  const PL = {};
+  $$('[data-i18n]').forEach(el => { PL[el.dataset.i18n] = el.innerHTML; });
+
+  const EN = {
+    loader: 'Sumi — Omakase<br>Warsaw',
+    nav1: 'Philosophy', nav2: 'Omakase', nav3: 'Menu', nav4: 'The chef', nav5: 'Interior', nav6: 'Getting here',
+    navRes: 'Reservations',
+    eyebrow: 'Omakase · Warsaw · since 2019',
+    h1a: '<span class="thin">—</span>The art', h1b: '<em>of silence</em>', h1c: 'on a plate.',
+    lead: 'Twelve seats at a hinoki-wood counter. Eighteen courses made right in front of you — with fish flown in from Toyosu twice a week.',
+    ctaRes: 'Book a seat', ctaMenu: 'See the menu',
+    badge: 'Reservations ✦ Omakase ✦ Sumi ✦ 墨 ✦ ',
+    scroll: 'Scroll', heroHours: 'Tue — Sun · 5:30 pm',
+    maSmall: 'Ma — the space between',
+    lbl1: '<b>01</b> Philosophy',
+    ab1: 'Sumi is Japanese for ink — black, dense, patiently ground on stone. Like a calligrapher, we never retouch a stroke. Every dish is made once, for you, to the rhythm of the evening.',
+    ab2: 'We cook our rice in cast iron and season it with red akazu vinegar. Fish is aged for three to ten days. Wasabi is grated on sharkskin — moments before serving.',
+    st1: 'seats at a Japanese cypress counter', st2: 'courses in the evening omakase',
+    st3: 'to prepare a single evening', st4: 'deliveries a week from Tokyo’s Toyosu market',
+    lbl2: '<b>02</b> Omakase',
+    jA: 'A journey', jB: 'in <em>eight</em>', jC: 'acts.',
+    jP: '“Omakase” means “I leave it to you”. You don’t order from a menu — you hand the evening to the chef. The season, the weather and the morning market decide the rest.',
+    jPrice: '<b>680 zł</b> / person · approx. 2.5 h', jSwipe: 'Swipe <i>→</i>',
+    jEndLbl: '終 — The end', jEndH: 'Ready for an <em>unhurried</em> evening?', jEndBtn: 'Book now',
+    lbl3: '<b>03</b> À la carte', mA: 'From the', mB: '<em>counter</em>',
+    note1: 'Prices in PLN. Nigiri are served as a pair.', note2: 'The menu follows the seasons — ask about today’s specials.',
+    lbl4: '<b>04</b> The chef',
+    sig: '<b>Ken Morita</b>Itamae · head chef and co-founder',
+    bio: 'He trained for ten years in Ginza, where for the first three he was allowed only to cook rice. Then came Copenhagen, Lisbon and finally Warsaw — a city where, as he says, “people still know how to listen to food”.',
+    tl1: 'Sushi Kanesaka, Tokyo', tl2: 'Copenhagen', tl3: 'Sumi, Warsaw',
+    lbl5: '<b>05</b> Interior', gA: 'Hinoki, stone', gB: 'and <em>dusk.</em>',
+    gP: 'Light falls only where it should — on the counter, the chef’s hands and your plate. Everything else sinks into warm shadow.',
+    cap1: 'Main room', cap4: 'Dinner at the table', cap5: 'Lunch set',
+    lbl6: '<b>06</b> Reservations', rA: 'Your seat', rB: '<em>at the counter.</em>',
+    dt1: 'Address', dd1: 'ul. Mokotowska 37<small>00-551 Warsaw, courtyard entrance</small>',
+    dt2: 'Hours', dd2: 'Tue — Sat · 5:30 — 11 pm<small>Sunday 1 — 9 pm · closed on Mondays</small>',
+    dt3: 'Contact',
+    fH3: 'Reservation <small>予約</small>', fName: 'Full name', fTel: 'Phone', fDate: 'Date', fType: 'Seating',
+    msgReq: 'Required', msgDate: 'Pick a date',
+    opt1: 'Omakase counter · 680 zł', opt2: 'À la carte table',
+    subTime: 'Time', subGuests: 'Guests', stepNote: 'max. 6 guests at the counter',
+    fNote: 'Allergies, occasion, wishes (optional)',
+    fFoot: 'Please let us know about cancellations at least 48 h in advance. We’ll confirm by text message.',
+    fSubmit: 'Confirm', sH4: 'See you <em>at the counter.</em>', sBack: 'New reservation',
+    lbl7: '<b>07</b> Getting here', vA: 'Find us', vB: '<em>in the courtyard.</em>',
+    vP: 'The entrance is through the courtyard of the tenement at Mokotowska 37 — look for the red lantern marked 墨. Ring “Sumi” on the intercom and we’ll let you in.',
+    r1h: 'Tram', r1p: '<b>Plac Zbawiciela</b> stop — lines 4, 15, 18, 35. Then an 8-minute walk up Mokotowska.',
+    r2h: 'Metro', r2p: '<b>Politechnika</b> station (M1) — about 12 minutes on foot.',
+    r3h: 'Car', r3p: 'Paid parking zone on Mokotowska and Koszykowa. Free after 8 pm and at weekends.',
+    routeBtn: 'Get directions', copyBtn: 'Copy address',
+    fAbout: 'Japanese omakase restaurant. Twelve seats, one chef, an unhurried evening.',
+    fH1: 'Visit', fAddr: 'ul. Mokotowska 37<br>00-551 Warsaw', fHow: 'How to get here →',
+    fH2: 'Hours', fHours: 'Tue — Sat 5:30 — 11 pm<br>Sun 1 — 9 pm', fH3: 'Follow',
+    copy: '© 2026 Sumi — fictional restaurant, portfolio project', photos: 'Photos: Unsplash', toTop: 'Back to top <i>↑</i>',
+    dockMenu: 'Menu', dockCall: 'Call', dockBook: 'Book'
+  };
+
+  const WORDS = {
+    pl: 'Wierzymy, że najlepsze smaki rodzą się w *ciszy.* W precyzji noża, w temperaturze ryżu, w chwili, gdy szef podaje Ci nigiri prosto do dłoni. Bez pośpiechu. Bez nadmiaru. Tylko to, co *istotne.*',
+    en: 'We believe the finest flavours are born in *silence.* In the precision of a knife, the temperature of rice, the moment the chef places nigiri straight into your hand. No rush. No excess. Only what is *essential.*'
+  };
+  const QUOTE = {
+    pl: 'Ryż mówi prawdę. Jeśli jesteś niecierpliwy — <em>on to wie.</em>',
+    en: 'Rice tells the truth. If you are impatient — <em>it knows.</em>'
+  };
+  const COURSES = {
+    pl: $$('.course p').map(p => p.textContent),
+    en: ['Seasonal starter — chirashi with ikura, shiso and yuzu.', 'Clear dashi broth with Rishiri kombu and bonito flakes.',
+      'Sashimi of the day, sliced in front of you.', 'From the robata grill — binchōtan charcoal and sea salt.',
+      'White and silver fish. Kohada, madai, shima-aji.', 'Akami, chūtoro, otoro — tuna in three acts.',
+      'Temaki handed straight from the chef’s hand.', 'To finish — fruit of the season and hōjicha tea.']
+  };
+  const MENU_EN = {
+    'Akami': 'Lean bluefin tuna, marinated in nikiri.', 'Otoro': 'The fattiest tuna belly, kissed by flame.',
+    'Hotate': 'Hokkaido scallop, yuzu, Okinawa salt.', 'Sake Aburi': 'Torched salmon, white miso.',
+    'Unagi': 'Eel glazed with tare, sansho pepper.', 'Ikura': 'Salmon roe cured in sake and soy.',
+    'Moriawase': 'Chef’s selection — twelve slices of the day.', 'Hamachi': 'Yellowtail, ponzu, green chilli and coriander.',
+    'Madai': 'Japanese sea bream, aged in kombu.', 'Chirashi': 'A bowl of sushi rice with sashimi and ikura.',
+    'Wagyu A5': '80 g from Kagoshima, binchōtan, wasabi salt.', 'Gindara': 'Black cod marinated for 48 h in saikyo miso.',
+    'Tsukune': 'Chicken meatball skewer, egg yolk, tare.', 'Aburi Maki': 'Flame-torched roll, yuzu mayonnaise.',
+    'Dassai 23': 'Junmai Daiginjo · Yamaguchi. Pear, melon, silk.', 'Kubota Manju': 'Junmai Daiginjo · Niigata. Clean, cool, long.',
+    'Hakkaisan': 'Tokubetsu Honjozo · Niigata. Dry and crisp.', 'Nigori': 'Unfiltered and creamy, with notes of rice and coconut.'
+  };
+  const SECT_EN = {
+    '#top': ['墨', 'Sumi', '00'], '#filozofia': ['間', 'Philosophy', '01'], '#omakase': ['任', 'Omakase', '02'],
+    '#karta': ['品', 'Menu', '03'], '#szef': ['匠', 'The chef', '04'], '#wnetrze': ['室', 'Interior', '05'],
+    '#rezerwacja': ['予', 'Reservations', '06'], '#dojazd': ['道', 'Getting here', '07']
+  };
+  const META = {
+    pl: ['SUMI 墨 — Omakase Warszawa', 'SUMI — japońska restauracja omakase w Warszawie. Dwanaście miejsc przy ladzie, osiemnaście dań, jedna wieczorna podróż.'],
+    en: ['SUMI 墨 — Omakase Warsaw', 'SUMI — a Japanese omakase restaurant in Warsaw. Twelve counter seats, eighteen courses, one evening journey.']
+  };
+
+  function splitWordsInto(p, text) {
+    p.innerHTML = text.trim().split(/\s+/).map(w => {
+      const hl = w.startsWith('*');
+      return '<span class="w' + (hl ? ' hl' : '') + '">' + w.replace(/\*/g, '') + '</span>';
+    }).join(' ');
+  }
+  function splitCharsInto(el, html) {
+    el.innerHTML = html;
+    let i = 0;
+    const walk = node => {
+      [...node.childNodes].forEach(n => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const word = document.createElement('span');
+            word.style.display = 'inline-block'; word.style.whiteSpace = 'nowrap';
+            [...part].forEach(c => {
+              const s = document.createElement('span');
+              s.className = 'ch'; s.style.setProperty('--i', i++); s.textContent = c;
+              word.appendChild(s);
+            });
+            frag.appendChild(word);
+          });
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    walk(el);
+  }
+
+  function successText(d, time) {
+    const first = $('#f-name').value.trim().split(' ')[0];
+    if (lang === 'en') {
+      const ds = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+      return `${first}, we look forward to seeing you on ${ds} at ${time}. A booking for ${guests} ${guests === 1 ? 'guest' : 'guests'} — we’ll confirm by text message.`;
+    }
+    const ds = d.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long' });
+    const wd = d.toLocaleDateString('pl-PL', { weekday: 'long' });
+    return `${first}, czekamy na Ciebie ${ds} (${wd}) o ${time}. Rezerwacja dla ${guests} ${guests === 1 ? 'osoby' : 'osób'} — potwierdzenie wyślemy SMS-em.`;
+  }
+
+  function applyLang(l) {
+    lang = l === 'en' ? 'en' : 'pl';
+    const D = lang === 'en' ? EN : PL;
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach(el => {
+      const v = D[el.dataset.i18n];
+      if (v == null) return;
+      el.innerHTML = v;
+      if (el.dataset.t !== undefined) el.dataset.t = el.textContent;
+    });
+    splitWordsInto($('[data-words]'), WORDS[lang]);
+    splitCharsInto($('.quote'), QUOTE[lang]);
+    $$('.course').forEach((c, i) => {
+      $('p', c).textContent = COURSES[lang][i];
+      c.dataset.cursor = lang === 'en' ? 'Taste' : 'Smak';
+    });
+    const act = $('.tab.active');
+    renderMenu(act ? act.dataset.cat : 'nigiri', false);
+    document.title = META[lang][0];
+    $('meta[name="description"]').setAttribute('content', META[lang][1]);
+    $$('.lang').forEach(g => {
+      g.dataset.l = lang;
+      $$('button', g).forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+    });
+    $('.map__hint').textContent = HINT[lang];
+    if (pin) pin.setTooltipContent(TIP[lang]);
+    if ($('.success').classList.contains('on') && dateIn.value)
+      $('.success__txt').textContent = successText(new Date(dateIn.value + 'T12:00'), $('input[name="time"]:checked').value);
+    try { localStorage.setItem('sumi-lang', lang); } catch (e) { }
+    layout();
+  }
+  function initLang() {
+    let l = 'pl';
+    try { l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('sumi-lang') || 'pl'; } catch (e) { }
+    applyLang(l);
+  }
+  $$('.lang button').forEach(b => b.addEventListener('click', e => {
+    const l = b.dataset.lang;
+    if (l === lang || inkBusy) return;
+    inkTo(null, e.clientX || innerWidth / 2, e.clientY || 40, {
+      label: l === 'en' ? ['言', 'English', 'EN'] : ['言', 'Polski', 'PL'],
+      onCover: () => applyLang(l)
+    });
+  }));
+
+  /* =========================================================
+     quick dock (menu · phone · booking) + full menu sheet
+     ========================================================= */
+  const dock = $('.dock'), sheet = $('.sheet'), sheetBody = $('.sheet__body');
+  const CAT = { nigiri: ['握り', 'Nigiri'], sashimi: ['刺身', 'Sashimi'], robata: ['炉端', 'Robata'], sake: ['酒', 'Sake'] };
+  const SHEET_TXT = {
+    pl: { title: 'Karta', omakase: 'Omakase — osiem aktów', omakaseSub: 'Wieczorne menu szefa · ok. 2,5 h', per: '/ osoba',
+      note: 'Ceny w PLN. Nigiri podajemy po dwa kawałki. Menu zmienia się z porą roku — pytaj o propozycje dnia.',
+      call: 'Zadzwoń', book: 'Zarezerwuj', close: 'Zamknij kartę', cats: 'Kategorie' },
+    en: { title: 'Menu', omakase: 'Omakase — eight acts', omakaseSub: 'The chef’s evening menu · approx. 2.5 h', per: '/ person',
+      note: 'Prices in PLN. Nigiri are served as a pair. The menu follows the seasons — ask about today’s specials.',
+      call: 'Call', book: 'Book a table', close: 'Close menu', cats: 'Categories' }
+  };
+
+  function buildSheet() {
+    const T = SHEET_TXT[lang];
+    $('#sheet-title').innerHTML = `${T.title} <b>品</b>`;
+    $('.sheet__x').setAttribute('aria-label', T.close);
+    $('.sheet__nav').setAttribute('aria-label', T.cats);
+    $('.sheet__nav').innerHTML = Object.entries(CAT)
+      .map(([k, [jp, name]], i) => `<button type="button" data-sheet-cat="${k}" class="${i ? '' : 'on'}">${name}<small>${jp}</small></button>`).join('');
+    sheetBody.innerHTML =
+      `<div class="sheet__omakase"><div><b>${T.omakase}</b><span>${T.omakaseSub}</span></div><em>680 zł<small>${T.per}</small></em></div>` +
+      Object.entries(menu).map(([k, items]) =>
+        `<section class="sheet__cat" id="sheet-${k}"><h3>${CAT[k][1]}<small>${CAT[k][0]}</small></h3>` +
+        items.map(([name, jp, desc, price, , unit]) =>
+          `<div class="sheet__item"><b>${name}<small>${jp}</small></b><em>${price} ${lang === 'en' ? 'PLN' : 'zł'}${unit ? `<small> / ${unit}</small>` : ''}</em>` +
+          `<span>${lang === 'en' && MENU_EN[name] || desc}</span></div>`).join('') +
+        '</section>').join('') +
+      `<p class="sheet__note">${T.note}</p>`;
+    $('.sheet__call span').textContent = T.call;
+    $('.sheet__book span').textContent = T.book;
+    sheetBody.scrollTop = 0;
+  }
+
+  let sheetReturn = null;
+  function openSheet() {
+    buildSheet();
+    sheetReturn = document.activeElement;
+    sheet.classList.add('open');
+    sheet.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    lenis && lenis.stop();
+    setTimeout(() => $('.sheet__x').focus({ preventScroll: true }), 60);
+    dockVis();
+  }
+  function closeSheet() {
+    if (!sheet.classList.contains('open')) return;
+    sheet.classList.remove('open');
+    sheet.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+    lenis && lenis.start();
+    dockVis();
+    if (sheetReturn && sheetReturn.focus) sheetReturn.focus({ preventScroll: true });
+  }
+
+  $$('[data-open-menu]').forEach(b => b.addEventListener('click', openSheet));
+  $('.sheet__x').addEventListener('click', closeSheet);
+  $('.sheet__bg').addEventListener('click', closeSheet);
+  addEventListener('keydown', e => {
+    if (!sheet.classList.contains('open')) return;
+    if (e.key === 'Escape') closeSheet();
+    // keep keyboard focus inside the open sheet
+    if (e.key === 'Tab') {
+      const f = $$('button, a[href]', $('.sheet__panel')), first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  // category chips jump inside the sheet; the active chip follows scrolling
+  $('.sheet__nav').addEventListener('click', e => {
+    const b = e.target.closest('[data-sheet-cat]');
+    if (!b) return;
+    sheetBody.scrollTo({ top: $('#sheet-' + b.dataset.sheetCat).offsetTop - 6, behavior: reduced ? 'auto' : 'smooth' });
+  });
+  sheetBody.addEventListener('scroll', () => {
+    const y = sheetBody.scrollTop + 60;
+    let cur = 'nigiri';
+    $$('.sheet__cat', sheetBody).forEach(c => { if (c.offsetTop <= y) cur = c.id.slice(6); });
+    if (sheetBody.scrollTop + sheetBody.clientHeight >= sheetBody.scrollHeight - 4) cur = 'sake';
+    $$('.sheet__nav button').forEach(b => b.classList.toggle('on', b.dataset.sheetCat === cur));
+  }, { passive: true });
+  $('.sheet__book').addEventListener('click', () => {
+    closeSheet();
+    setTimeout(() => inkTo('#rezerwacja', innerWidth / 2, innerHeight - 60), 380);
+  });
+
+  // the dock is visible right after the intro animation (hidden only while a menu/sheet is open)
+  const dockVis = () => dock.classList.toggle('on',
+    document.body.classList.contains('loaded') &&
+    !document.body.classList.contains('menu-open') && !sheet.classList.contains('open'));
+  addEventListener('scroll', dockVis, { passive: true });
+  $('.burger').addEventListener('click', () => setTimeout(dockVis, 0));
+  new MutationObserver(dockVis).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+  sizeSmoke();
+  addEventListener('resize', sizeSmoke);
+
+  /* ---------- boot ---------- */
+  renderMenu('nigiri', false);
+  initLang();
+  bindHover();
+  observeAll();
+  layout();
+  addEventListener('resize', layout);
+  addEventListener('load', layout);
+  requestAnimationFrame(raf);
+
+  const loader = $('.loader'), lCount = $('.loader__count'), lInk = null;
+  // arriving from a link like /#rezerwacja (e.g. from the blog): short intro, then jump to that section
+  const deepLink = location.hash.length > 1 && document.getElementById(decodeURIComponent(location.hash.slice(1))) ? location.hash : null;
+  const minTime = reduced ? 0 : deepLink ? 700 : 2600, t0 = performance.now();
+  let ready = false;
+  Promise.race([
+    Promise.all([document.fonts.ready, new Promise(r => heroImg.complete ? r() : (heroImg.onload = heroImg.onerror = r))]),
+    new Promise(r => setTimeout(r, 4500))
+  ]).then(() => ready = true);
+  const loadStep = t => {
+    const p = clamp((t - t0) / minTime, 0, ready ? 1 : .9);
+    const e = 1 - Math.pow(1 - p, 3);
+    lCount.textContent = Math.round(e * 100);
+    drawKanji(loaderKanji, e);
+    if (p < 1 || !ready) return requestAnimationFrame(loadStep);
+    setTimeout(() => {
+      loader.classList.add('done');
+      document.body.classList.remove('is-loading');
+      document.body.classList.add('loaded');
+      lenis && lenis.start();
+      layout();
+      if (deepLink) jump(deepLink);
+      setTimeout(() => loader.remove(), 1400);
+    }, 250);
+  };
+  requestAnimationFrame(loadStep);
+})();
+</script>
+</body>
+</html>
