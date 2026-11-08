@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "sumi-cms-test",
+  "name": "sumorestaurant",
   "compatibility_date": "2026-11-01",
   // `wrangler deploy` builds the site first...
   "build": {
