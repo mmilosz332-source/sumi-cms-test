@@ -5,7 +5,7 @@ export default {
   name: 'SUMI 墨',
   phone: 'tel:+48221002030',
   nav: [
-    ['/#filozofia', 'Filozofia'], ['/#omakase', 'Omakase'], ['/#karta', 'Karta'], ['/#szef', 'Szef kuchni'],
-    ['/#wnetrze', 'Wnętrze'], ['/#dojazd', 'Dojazd'], ['/blog/', 'Blog']
+    ['/#filozofia', 'Filozofia'], ['/#omakase', 'Omakase'], ['/#karta', 'Karta'], ['/#wnetrze', 'Wnętrze'],
+    ['/#szef', 'Szef kuchni'], ['/#dojazd', 'Dojazd'], ['/blog/', 'Blog']
   ]
 };
