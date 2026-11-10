@@ -32,4 +32,5 @@ collections:
       - { name: date, label: Data, widget: datetime, type: date }
       - { name: description, label: Opis, widget: text, hint: "Krótki opis na kafelek i do wyszukiwarek (ok. 150 znaków)." }
       - { name: image, label: Zdjęcie główne, widget: image }
+      - { name: alt, label: Opis zdjęcia, widget: string, required: false, hint: "Co widać na zdjęciu, np. „Nigiri z łososiem na czarnej desce”. Pomaga w Google i osobom niewidomym. Puste = użyty zostanie tytuł." }
       - { name: body, label: Treść, widget: markdown }

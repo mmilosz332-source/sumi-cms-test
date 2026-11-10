@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SUMI 墨 — Omakase Warszawa</title>
-<meta name="description" content="SUMI — japońska restauracja omakase w Warszawie. Dwanaście miejsc przy ladzie, osiemnaście dań, jedna wieczorna podróż.">
+<title>SUMI Omakase · Sushi w Warszawie</title>
+<meta name="description" content="SUMI to japońska restauracja omakase w Warszawie, przy ul. Mokotowskiej 37. Dwanaście miejsc przy ladzie, osiemnaście dań i jedna wieczorna podróż.">
 <!-- fictional restaurant: keep it out of search results -->
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1160,7 +1160,7 @@ main{overflow-x:clip}
     const el = document.createElement('article');
     el.className = 'course';
     el.innerHTML = `<span class="course__num">${n}</span>
-      <div class="course__img"><img src="${img(id, 800)}" srcset="${imgSet(id)}" sizes="(max-width:900px) 76vw, 28vw" ${imgDims(id)} alt="${name}" loading="lazy" decoding="async"></div>
+      <div class="course__img"><img src="${img(id, 800)}" srcset="${imgSet(id)}" sizes="(max-width:900px) 76vw, 28vw" ${imgDims(id)} alt="${name}: ${desc.replace(/"/g, '')}" loading="lazy" decoding="async"></div>
       <div class="course__meta"><h3>${name}<small>${jp}</small></h3><span class="course__idx">0${i + 1} / 08</span></div>
       <p>${desc}</p>`;
     el.dataset.cursor = 'Smak';
@@ -1796,8 +1796,8 @@ main{overflow-x:clip}
     '#rezerwacja': ['予', 'Reservations', '06'], '#dojazd': ['道', 'Getting here', '07']
   };
   const META = {
-    pl: ['SUMI 墨 — Omakase Warszawa', 'SUMI — japońska restauracja omakase w Warszawie. Dwanaście miejsc przy ladzie, osiemnaście dań, jedna wieczorna podróż.'],
-    en: ['SUMI 墨 — Omakase Warsaw', 'SUMI — a Japanese omakase restaurant in Warsaw. Twelve counter seats, eighteen courses, one evening journey.']
+    pl: ['SUMI Omakase · Sushi w Warszawie', 'SUMI to japońska restauracja omakase w Warszawie, przy ul. Mokotowskiej 37. Dwanaście miejsc przy ladzie, osiemnaście dań i jedna wieczorna podróż.'],
+    en: ['SUMI Omakase · Sushi in Warsaw', 'SUMI is a Japanese omakase restaurant in Warsaw, on Mokotowska Street. Twelve seats at the counter, eighteen courses and one unhurried evening journey.']
   };
 
   function splitWordsInto(p, text) {
